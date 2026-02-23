@@ -4,7 +4,7 @@ import { validarToken } from '../middleware/authMiddleware.js'
 const rutasUsuarios= express.Router()
 
 import { crearUsuario } from '../controllers/controllerUsuario.js'
-rutasUsuarios.post('/crear',validarToken,crearUsuario)
+rutasUsuarios.post('/crear', validarToken, crearUsuario)
 
 import { listarUsuario } from '../controllers/controllerUsuario.js'
 rutasUsuarios.get('/listar',validarToken,listarUsuario)

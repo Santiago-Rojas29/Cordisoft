@@ -1,5 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ButtonDelete } from "../../components/Atoms/tablaUsuarios/ButtonDelete";
+import { ButtonEdit } from "../../components/Atoms/tablaUsuarios/ButtonEdit";
+import { estadoTablas } from "../../components/Atoms/tablaUsuarios/ButtonStatus";
+import { buttonAdd } from "../../components/Atoms/ButtonAdd";
 import { toast } from "sonner";
 
 function Usuarios() {
@@ -176,25 +180,25 @@ function Usuarios() {
                       <td>{usuario.nombre}</td>
                       <td>{usuario.apellidos}</td>
                       <td>
-                        <span className={`badge ${usuario.estado === 'activa' ? 'bg-success' : 'bg-danger'}`}>
+                        <estadoTablas className={`badge ${usuario.estado === 'activa' ? 'bg-success' : 'bg-danger'}`}>
                           {usuario.estado === 'activa' ? 'Activa' : 'Inactiva'}
-                        </span>
+                        </estadoTablas>
                       </td>
                       <td>{usuario.id_rol}</td>
                       <td>{usuario.contraseña || 'Sin descripción'}</td>
                       <td>
-                        <button
+                        <ButtonEdit
                           className="btn btn-sm btn-info me-1"
                           onClick={() => actualizarUsuario(usuario.id_usuario)}
                         >
                           Editar
-                        </button>
-                        <button
+                        </ButtonEdit>
+                        <ButtonDelete
                           className="btn btn-sm btn-danger"
                           onClick={() => eliminarUsuario(usuario.id_usuario)}
                         >
                           Eliminar
-                        </button>
+                        </ButtonDelete>
                       </td>
                     </tr>
                   ))
@@ -205,14 +209,13 @@ function Usuarios() {
         </div>
       </div>
 
-      {/* Botón "Agregar Área" debajo de la tabla */}
       <div className="mt-3">
-        <button
+        <buttonAdd
           className="btn btn-success"
           onClick={abrirModal}
         >
           Agregar Usuario
-        </button>
+        </buttonAdd>
       </div>
 
       {mostrarModal && (
@@ -280,7 +283,6 @@ function Usuarios() {
           </div>
         </div>
       )}
-      {/* Overlay para bloquear interacción cuando el modal está abierto */}
       {mostrarModal && (
         <div className="modal-backdrop fade show"></div>
       )}
