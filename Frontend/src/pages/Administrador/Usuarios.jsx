@@ -4,6 +4,8 @@ import { ButtonDelete } from "../../components/Atoms/tablaUsuarios/ButtonDelete"
 import { ButtonEdit } from "../../components/Atoms/tablaUsuarios/ButtonEdit";
 import { estadoTablas } from "../../components/Atoms/tablaUsuarios/ButtonStatus";
 import { buttonAdd } from "../../components/Atoms/ButtonAdd";
+import { buttonSearch } from "../../components/Atoms/tablaUsuarios/ButtonSearch";
+import PageUser from "../../components/Page/UserPage";
 import { toast } from "sonner";
 
 function Usuarios() {
@@ -137,7 +139,7 @@ function Usuarios() {
 
   return (
     <div className="container-fluid p-4">
-      <div className="card shadow-sm" style={{width:1370, display:"flex", marginTop:80}}>
+      {/* <div className="card shadow-sm" style={{width:1370, display:"flex", marginTop:80}}>
         <div className="card-header bg-light d-flex justify-content-between align-items-center">
           <h2 className="mb-0">USUARIOS</h2>
           <div className="d-flex gap-2">
@@ -147,7 +149,7 @@ function Usuarios() {
               placeholder="Buscar..."
               style={{ width: '500px', borderRadius:15 }}
             />
-            <button className="btn btn-outline-primary btn-sm" style={{marginLeft:400}}>Buscar</button>
+            <buttonSearch className="btn btn-outline-primary btn-sm" style={{marginLeft:400}}>Buscar</buttonSearch>
           </div>
         </div>
         <div className="card-body">
@@ -216,7 +218,16 @@ function Usuarios() {
         >
           Agregar Usuario
         </buttonAdd>
-      </div>
+      </div> */}
+
+      <PageUser
+      lista={lista}
+      abrirModal={abrirModal}
+      actualizarUsuario={actualizarUsuario}
+      eliminarUsuario={eliminarUsuario}
+      
+
+      />
 
       {mostrarModal && (
         <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
