@@ -7,7 +7,6 @@ const FormField = ({ id, name, label, type = "text", value, onChange, required, 
         <div className="mb-2">
             <Label htmlFor={id}>{label}</Label>
             <Input
-                id={id}
                 name={name}
                 type={type}
                 value={value}

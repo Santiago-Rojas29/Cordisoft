@@ -37,7 +37,7 @@ const Table = ({ columns, data, keyField = "id", emptyMessage = "No hay registro
                             <tr key={row[keyField]}>
                                 {columns.map((col, idx) => (
                                     <td
-                                        key={idx}
+                                        key={col.accessor}
                                         className={`${col.center ? 'text-center' : ''} ${idx === 0 ? 'px-3 fw-bold text-secondary' : ''}`}
                                     >
                                         {col.render ? col.render(row) : row[col.accessor]}

@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosClient from "../../services/axiosClient";
 import React, { useEffect, useState } from "react";
 import Button from "../../components/atoms/Button";
 import PageUser from "../../components/pages/UserPage";
@@ -25,7 +26,7 @@ function Usuarios() {
 
   const obtenerUsuario = async () => {
     try {
-      const respuesta = await axios.get('http://localhost:3000/usuarios/listar');
+      const respuesta = await axiosClient.get('/usuarios/listar');
       setLista(respuesta.data);
     } catch (error) {
       console.error('Error al mostrar la lista', error);
@@ -54,21 +55,21 @@ function Usuarios() {
       let response;
 
       if (modoEdicion) {
-        response = await axios.put(`http://localhost:3000/usuarios/actualizar/${idEditar}`, datosProcesados, {
+        response = await axiosClient.put(`/usuarios/actualizar/${idEditar}`, datosProcesados, {
           headers: { 'Content-Type': 'application/json' }
         });
         toast.success("Usuario actualizado correctamente");
         setIdEditar(null);
         setModoEdicion(false);
       } else {
-        response = await axios.post('http://localhost:3000/usuarios/crear', datosProcesados, {
+        response = await axiosClient.post('/usuarios/crear', datosProcesados, {
           headers: { 'Content-Type': 'application/json' }
         });
         toast.success(response.data.mensaje || "Material registrado correctamente");
       }
 
       obtenerUsuario();
-      setDatos({ id_usuario: "", correo_electronico: "", identificacion: "", nombre: "", apellidos: "", estado: "", id_rol: "", contraseña: "" });
+      setDatos({ id_usuario:"", correo_electronico: "", identificacion: "", nombre: "", apellidos: "", estado: "", id_rol: "", contraseña: "" });
       setMostrarModal(false); // 👈 Cierra el modal después de guardar
 
     } catch (error) {
@@ -85,7 +86,7 @@ function Usuarios() {
   const eliminarUsuario = (id) => {
     if (!window.confirm("¿Estás seguro de eliminar este Usuario?")) return;
 
-    axios.delete(`http://localhost:3000/usuarios/eliminar/${id}`)
+    axiosClient.delete(`/usuarios/eliminar/${id}`)
       .then(respuesta => {
         toast.success(respuesta.data || "Usuario eliminado");
         obtenerUsuario();
@@ -97,7 +98,7 @@ function Usuarios() {
   };
 
   const actualizarUsuario = (id) => {
-    axios.get(`http://localhost:3000/usuarios/buscar/${id}`)
+    axiosClient.get(`/usuarios/buscar/${id}`)
       .then(respuesta => {
         const usuario = respuesta.data[0];
         setDatos({
@@ -138,86 +139,6 @@ function Usuarios() {
 
   return (
     <div className="container-fluid p-4">
-      {/* <div className="card shadow-sm" style={{width:1370, display:"flex", marginTop:80}}>
-        <div className="card-header bg-light d-flex justify-content-between align-items-center">
-          <h2 className="mb-0">USUARIOS</h2>
-          <div className="d-flex gap-2">
-            <input
-              type="text"
-              className="form-control form-control-sm"
-              placeholder="Buscar..."
-              style={{ width: '500px', borderRadius:15 }}
-            />
-            <buttonSearch className="btn btn-outline-primary btn-sm" style={{marginLeft:400}}>Buscar</buttonSearch>
-          </div>
-        </div>
-        <div className="card-body">
-          <div className="table-responsive">
-            <table className="table table-striped table-hover align-middle" style={{width:1335}}>
-              <thead className="table-light">
-                <tr>
-                  <th>ID</th>
-                  <th>Correo</th>
-                  <th>Identicacion</th>
-                  <th>Nombre</th>
-                  <th>Apellidos</th>
-                  <th>Estado</th>
-                  <th>ID (Rol)</th>
-                  <th>Contraseña</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lista.length === 0 ? (
-                  <tr>
-                    <td colSpan="10" className="text-center py-4">No hay Usuarios registrados</td>
-                  </tr>
-                ) : (
-                  lista.map((usuario) => (
-                    <tr key={usuario.id_usuario}>
-                      <td>{usuario.id_usuario}</td>
-                      <td>{usuario.correo_electronico}</td>
-                      <td>{usuario.identificacion}</td>
-                      <td>{usuario.nombre}</td>
-                      <td>{usuario.apellidos}</td>
-                      <td>
-                        <estadoTablas className={`badge ${usuario.estado === 'activa' ? 'bg-success' : 'bg-danger'}`}>
-                          {usuario.estado === 'activa' ? 'Activa' : 'Inactiva'}
-                        </estadoTablas>
-                      </td>
-                      <td>{usuario.id_rol}</td>
-                      <td>{usuario.contraseña || 'Sin descripción'}</td>
-                      <td>
-                        <ButtonEdit
-                          className="btn btn-sm btn-info me-1"
-                          onClick={() => actualizarUsuario(usuario.id_usuario)}
-                        >
-                          Editar
-                        </ButtonEdit>
-                        <ButtonDelete
-                          className="btn btn-sm btn-danger"
-                          onClick={() => eliminarUsuario(usuario.id_usuario)}
-                        >
-                          Eliminar
-                        </ButtonDelete>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-3">
-        <buttonAdd
-          className="btn btn-success"
-          onClick={abrirModal}
-        >
-          Agregar Usuario
-        </buttonAdd>
-      </div> */}
 
       <PageUser
         lista={lista}
@@ -237,9 +158,6 @@ function Usuarios() {
           onSubmit={handleSubmit}
         >
           <div className="row g-3">
-            <div className="col-md-6">
-              <FormField id="id_usuario" name="id_usuario" label="ID Usuario" type="number" value={datos.id_usuario} onChange={handleChange} required disabled={modoEdicion} />
-            </div>
             <div className="col-md-6">
               <FormField id="correo_electronico" name="correo_electronico" label="Correo" type="email" value={datos.correo_electronico} onChange={handleChange} required />
             </div>

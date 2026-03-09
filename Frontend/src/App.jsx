@@ -14,6 +14,7 @@ import Usuarios from "./pages/Administrador/Usuarios.jsx"
 import Solicitudes from "./pages/Administrador/Solicitudes.jsx"
 import VerificacionMateriales from "./pages/Administrador/VerificacionMateriales.jsx"
 import ActualizarStock from "./pages/Administrador/ActualizarStock.jsx"
+import Home from "./pages/Administrador/Home.jsx"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="home" element={<Home />} />
           <Route path="areas" element={<Areas />} />
           <Route path="fichas" element={<Fichas />} />
           <Route path="materiales" element={<Materiales />} />

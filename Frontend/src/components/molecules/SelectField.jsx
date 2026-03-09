@@ -7,7 +7,6 @@ const SelectField = ({ id, name, label, value, onChange, options, required, disa
         <div className="mb-2">
             <Label htmlFor={id}>{label}</Label>
             <Select
-                id={id}
                 name={name}
                 value={value}
                 onChange={onChange}

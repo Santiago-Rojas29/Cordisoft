@@ -53,6 +53,24 @@ function Navbar() {
       <div className="flex-grow-1 p-3 overflow-auto">
         <ul className="nav flex-column gap-1">
 
+          <li className="nav-item">
+            <Link
+              to="/administrador/home"
+              className={`nav-link rounded d-flex align-items-center ${isActive('/home')
+                  ? 'bg-success bg-opacity-25 text-success fw-semibold'
+                  : 'text-secondary'
+                }`}
+              style={{
+                padding: '10px 12px',
+                fontSize: '0.8rem',
+                fontWeight: '500'
+              }}
+            >
+              <FontAwesomeIcon icon={faBoxOpen} className="me-2" style={{ fontSize: '0.85rem' }} />
+              HOME
+            </Link>
+          </li>
+
 
           <li className="nav-item mb-2">
             <button
