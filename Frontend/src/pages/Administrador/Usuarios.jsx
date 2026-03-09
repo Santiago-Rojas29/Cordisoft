@@ -1,6 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Button from "../../components/atoms/Button";
 import PageUser from "../../components/pages/UserPage";
+import Modal from "../../components/organisms/Modal";
+import FormField from "../../components/molecules/FormField";
+import SelectField from "../../components/molecules/SelectField";
 import { toast } from "sonner";
 
 function Usuarios() {
@@ -225,73 +229,48 @@ function Usuarios() {
       />
 
       {mostrarModal && (
-        <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content" style={{ height: 600 }}>
-              <div className="modal-header">
-                <h5 className="modal-title">
-                  {modoEdicion ? "Actualizar Material" : "Agregar Nuevo Material"}
-                </h5>
-                <button type="button" className="btn-close" onClick={cerrarModal}></button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="row g-3">
-                    <div className="col-md-6">
-                      <label htmlFor="id_areas" className="form-label" style={{ height: 45 }}>ID Usuario</label>
-                      <input type="number" className="form-control" id="id_usuario" name="id_usuario" value={datos.id_usuario} onChange={handleChange} required disabled={modoEdicion}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Correo</label>
-                      <input type="email" className="form-control" id="correo_electronico" name="correo_electronico" value={datos.correo_electronico} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Identificacion</label>
-                      <input type="number" className="form-control" id="identificacion" name="identificacion" value={datos.identificacion} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Nombre</label>
-                      <input type="text" className="form-control" id="nombre" name="nombre" value={datos.nombre} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Apellidos</label>
-                      <input type="text" className="form-control" id="apellidos" name="apellidos" value={datos.apellidos} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="estado" className="form-label" style={{ height: 45 }}>Estado</label>
-                      <select className="form-select" id="estado" name="estado" value={datos.estado} onChange={handleChange} required>
-                        <option value="">Seleccione</option>
-                        <option value="Activo">Activa</option>
-                        <option value="Inactivo">Inactiva</option>
-                      </select>
-                    </div>
-                    <div className="col-md-12">
-                      <label htmlFor="descripcion" className="form-label" style={{ height: 45 }}>ID Rol</label>
-                      <input type="number" className="form-control" id="id_rol" name="id_rol" value={datos.id_rol} onChange={handleChange} />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="id_usuario" className="form-label" style={{ height: 45 }}>Contraseña</label>
-                      <input type="password" className="form-control" id="contraseña" name="contraseña" value={datos.contraseña} onChange={handleChange} />
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={cerrarModal}>
-                  Cancelar
-                </button>
-                <button type="button" className="btn btn-success" onClick={registrarUsuario}>
-                  {modoEdicion ? "Actualizar" : "Aceptar"}
-                </button>
-              </div>
+        <Modal
+          show={mostrarModal}
+          title={modoEdicion ? "Actualizar Usuario" : "Agregar Nuevo Usuario"}
+          submitText={modoEdicion ? "Actualizar" : "Aceptar"}
+          onClose={cerrarModal}
+          onSubmit={handleSubmit}
+        >
+          <div className="row g-3">
+            <div className="col-md-6">
+              <FormField id="id_usuario" name="id_usuario" label="ID Usuario" type="number" value={datos.id_usuario} onChange={handleChange} required disabled={modoEdicion} />
+            </div>
+            <div className="col-md-6">
+              <FormField id="correo_electronico" name="correo_electronico" label="Correo" type="email" value={datos.correo_electronico} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6">
+              <FormField id="identificacion" name="identificacion" label="Identificación" type="number" value={datos.identificacion} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6">
+              <FormField id="nombre" name="nombre" label="Nombre" value={datos.nombre} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6">
+              <FormField id="apellidos" name="apellidos" label="Apellidos" value={datos.apellidos} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6">
+              <SelectField
+                id="estado" name="estado" label="Estado" value={datos.estado} onChange={handleChange} required
+                options={[
+                  { value: 'Activo', label: 'Activa' },
+                  { value: 'Inactivo', label: 'Inactiva' }
+                ]}
+              />
+            </div>
+            <div className="col-md-12">
+              <FormField id="id_rol" name="id_rol" label="ID Rol" type="number" value={datos.id_rol} onChange={handleChange} />
+            </div>
+            <div className="col-md-6">
+              <FormField id="contraseña" name="contraseña" label="Contraseña" type="password" value={datos.contraseña} onChange={handleChange} />
             </div>
           </div>
-        </div>
+        </Modal>
       )}
-      {mostrarModal && (
-        <div className="modal-backdrop fade show"></div>
-      )}
+
     </div>
   );
 }
