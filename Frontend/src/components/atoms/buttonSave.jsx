@@ -11,12 +11,13 @@ export const ButtonSave=()=>{
 const styles = {
     width: "100%",
     padding: "12px",
-    backgroundColor: "#39A900",
-    color: "white",
+    background: "#39A900",
     border: "none",
     borderRadius: "8px",
+    color: "white",
+    fontSize: "16px",
     fontWeight: "bold",
-    cursor: "pointer",
-};
+    cursor: "pointer"
+}
 
 
