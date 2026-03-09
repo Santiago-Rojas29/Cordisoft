@@ -2,13 +2,13 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import Login from "./pages/Login"
 import Instructor from "./pages/Instructor.jsx"
 import ProtectedRoute from "./routes/ProtectedRoute"
-import AdminLayout from "./layouts/AdminLayout.jsx"
+import AdminLayout from "./components/layout/AdminLayout.jsx"
 
 import Dashboard from "./pages/Administrador/Dashboard.jsx"
 import Areas from "./pages/Administrador/Areas.jsx"
 import Fichas from "./pages/Administrador/Fichas.jsx"
 import Materiales from "./pages/Administrador/Materiales.jsx"
-import Notificaciones  from "./pages/Administrador/Notificaciones.jsx"
+import Notificaciones from "./pages/Administrador/Notificaciones.jsx"
 import Reportes from "./pages/Administrador/Reportes.jsx"
 import Usuarios from "./pages/Administrador/Usuarios.jsx"
 import Solicitudes from "./pages/Administrador/Solicitudes.jsx"
@@ -40,7 +40,7 @@ function App() {
           <Route path="solicitudes" element={<Solicitudes />} />
           <Route path="notificaciones" element={<Notificaciones />} />
           <Route path="actualizarStock" element={<ActualizarStock />} />
-          <Route path="verificacionMateriales" element={<VerificacionMateriales/>} />
+          <Route path="verificacionMateriales" element={<VerificacionMateriales />} />
         </Route>
 
         <Route
