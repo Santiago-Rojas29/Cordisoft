@@ -1,11 +1,11 @@
-import fondo from "../assets/fondo-sena.jpg"
-import logo from "../assets/logo-tracemath.png"
+import fondo from "../../assets/fondo-sena.jpg"
+import logo from "../../assets/logo-tracemath.png"
 
-import { AuthTemplate } from "../components/templates/AuthTemplate"
-import { LoginForm } from "../components/organisms/loginForm"
+import { AuthTemplate } from "../templates/AuthTemplate"
+import { LoginForm } from "../organisms/loginForm"
 
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../auth/authContext"
+import { useAuth } from "../../auth/authContext"
 
 export default function Login() {
 
