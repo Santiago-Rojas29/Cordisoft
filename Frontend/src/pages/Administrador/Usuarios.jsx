@@ -1,11 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ButtonDelete } from "../../components/Atoms/tablaUsuarios/ButtonDelete";
-import { ButtonEdit } from "../../components/Atoms/tablaUsuarios/ButtonEdit";
-import { estadoTablas } from "../../components/Atoms/tablaUsuarios/ButtonStatus";
-import { buttonAdd } from "../../components/Atoms/ButtonAdd";
-import { buttonSearch } from "../../components/Atoms/tablaUsuarios/ButtonSearch";
-import PageUser from "../../components/Page/UserPage";
+import PageUser from "../../components/pages/UserPage";
 import { toast } from "sonner";
 
 function Usuarios() {
@@ -22,7 +17,7 @@ function Usuarios() {
   const [modoEdicion, setModoEdicion] = useState(false);
   const [idEditar, setIdEditar] = useState(null);
   const [lista, setLista] = useState([{}]);
-  const [mostrarModal, setMostrarModal] = useState(false); 
+  const [mostrarModal, setMostrarModal] = useState(false);
 
   const obtenerUsuario = async () => {
     try {
@@ -127,7 +122,7 @@ function Usuarios() {
     setDatos({ id_usuario: "", correo_electronico: "", identificacion: "", nombre: "", apellidos: "", estado: "", id_rol: "", contraseña: "" });
     setModoEdicion(false);
     setIdEditar(null);
-    setMostrarModal(true); 
+    setMostrarModal(true);
   };
 
   const cerrarModal = () => {
@@ -221,18 +216,18 @@ function Usuarios() {
       </div> */}
 
       <PageUser
-      lista={lista}
-      abrirModal={abrirModal}
-      actualizarUsuario={actualizarUsuario}
-      eliminarUsuario={eliminarUsuario}
-      
+        lista={lista}
+        abrirModal={abrirModal}
+        actualizarUsuario={actualizarUsuario}
+        eliminarUsuario={eliminarUsuario}
+
 
       />
 
       {mostrarModal && (
         <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content" style={{height:600}}>
+            <div className="modal-content" style={{ height: 600 }}>
               <div className="modal-header">
                 <h5 className="modal-title">
                   {modoEdicion ? "Actualizar Material" : "Agregar Nuevo Material"}
@@ -243,28 +238,28 @@ function Usuarios() {
                 <form onSubmit={handleSubmit}>
                   <div className="row g-3">
                     <div className="col-md-6">
-                      <label htmlFor="id_areas" className="form-label" style={{height:45}}>ID Usuario</label>
-                      <input type="number" className="form-control" id="id_usuario" name="id_usuario" value={datos.id_usuario} onChange={handleChange} required disabled={modoEdicion} 
+                      <label htmlFor="id_areas" className="form-label" style={{ height: 45 }}>ID Usuario</label>
+                      <input type="number" className="form-control" id="id_usuario" name="id_usuario" value={datos.id_usuario} onChange={handleChange} required disabled={modoEdicion}
                       />
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{height:45}}>Correo</label>
+                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Correo</label>
                       <input type="email" className="form-control" id="correo_electronico" name="correo_electronico" value={datos.correo_electronico} onChange={handleChange} required />
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{height:45}}>Identificacion</label>
+                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Identificacion</label>
                       <input type="number" className="form-control" id="identificacion" name="identificacion" value={datos.identificacion} onChange={handleChange} required />
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{height:45}}>Nombre</label>
+                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Nombre</label>
                       <input type="text" className="form-control" id="nombre" name="nombre" value={datos.nombre} onChange={handleChange} required />
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="nombre" className="form-label" style={{height:45}}>Apellidos</label>
+                      <label htmlFor="nombre" className="form-label" style={{ height: 45 }}>Apellidos</label>
                       <input type="text" className="form-control" id="apellidos" name="apellidos" value={datos.apellidos} onChange={handleChange} required />
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="estado" className="form-label" style={{height:45}}>Estado</label>
+                      <label htmlFor="estado" className="form-label" style={{ height: 45 }}>Estado</label>
                       <select className="form-select" id="estado" name="estado" value={datos.estado} onChange={handleChange} required>
                         <option value="">Seleccione</option>
                         <option value="Activo">Activa</option>
@@ -272,12 +267,12 @@ function Usuarios() {
                       </select>
                     </div>
                     <div className="col-md-12">
-                      <label htmlFor="descripcion" className="form-label" style={{height:45}}>ID Rol</label>
-                      <input type="number" className="form-control" id="id_rol" name="id_rol" value={datos.id_rol} onChange={handleChange}/>
+                      <label htmlFor="descripcion" className="form-label" style={{ height: 45 }}>ID Rol</label>
+                      <input type="number" className="form-control" id="id_rol" name="id_rol" value={datos.id_rol} onChange={handleChange} />
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="id_usuario" className="form-label" style={{height:45}}>Contraseña</label>
-                      <input type="password" className="form-control" id="contraseña" name="contraseña" value={datos.contraseña} onChange={handleChange}/>
+                      <label htmlFor="id_usuario" className="form-label" style={{ height: 45 }}>Contraseña</label>
+                      <input type="password" className="form-control" id="contraseña" name="contraseña" value={datos.contraseña} onChange={handleChange} />
                     </div>
                   </div>
                 </form>

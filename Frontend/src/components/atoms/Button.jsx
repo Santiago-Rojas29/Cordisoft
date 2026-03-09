@@ -1,4 +1,6 @@
-const Button = ({ children, variant = "primary", size = "md", ...props }) => {
+import React from 'react';
+
+const Button = ({ children, variant = "primary", size = "md", className = "", ...props }) => {
     const base = "btn";
     const variants = {
         primary: "btn-primary",
@@ -9,16 +11,12 @@ const Button = ({ children, variant = "primary", size = "md", ...props }) => {
         outline: "btn-outline-primary"
     };
 
-    const sizes = {
-        sm: "btn-sm",
-        md: "",
-        lg: "btn-lg"
-    };
+    const sizes = { sm: "btn-sm", md: "", lg: "btn-lg" };
 
     return (
         <button
-        className={`${base} ${variants[variant]} ${sizes[size]}`}
-        {...props}
+            className={`${base} ${variants[variant] || "btn-primary"} ${sizes[size] || ""} ${className}`}
+            {...props}
         >
             {children}
         </button>

@@ -1,12 +1,12 @@
-import Button from "../../Molecule/Atom/Button";
+import React from 'react';
+import Button from "../atoms/Button";
 
-const UserTableActions = ({ onEdit, onDelete}) => {
+const UserTableActions = ({ onEdit, onDelete }) => {
     return (
-        <div>
+        <div className="d-flex justify-content-center gap-2">
             <Button variant="info" size="sm" onClick={onEdit}>
                 Editar
             </Button>
-
             <Button variant="danger" size="sm" onClick={onDelete}>
                 Eliminar
             </Button>
@@ -14,4 +14,4 @@ const UserTableActions = ({ onEdit, onDelete}) => {
     );
 };
 
-export default UserTableActions
+export default UserTableActions;
