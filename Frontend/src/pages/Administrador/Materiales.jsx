@@ -1,4 +1,3 @@
-import PageUser from "../../components/pages/UserPage";
 import Modal from "../../components/organisms/Modal";
 import FormField from "../../components/molecules/FormField";
 import SelectField from "../../components/molecules/SelectField";
@@ -136,14 +135,7 @@ export default function Materiales() {
   return (
     <div className="container-fluid p-4">
 
-      <PageUser
-        lista={lista}
-        abrirModal={abrirModal}
-        actualizarUsuario={actualizarUsuario}
-        eliminarUsuario={eliminarUsuario}
-
-
-      />
+      
     </div>
   )
 
