@@ -6,7 +6,7 @@ const servidor = express();
 
 servidor.use(bodyParser.json())
 servidor.use(cors({
-    origin: "http://localhost:5174", 
+    origin: "http://localhost:5173", 
     methods: ["GET","POST","PUT","DELETE"],
     credentials: true
 }));

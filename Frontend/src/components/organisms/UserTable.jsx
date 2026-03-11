@@ -58,7 +58,6 @@ const UserTable = ({ lista, actualizarUsuario, eliminarUsuario }) => {
         }
     ];
 
-    // 2. Le pasamos todo al componente genérico
     return (
         <Table
             columns={columns}

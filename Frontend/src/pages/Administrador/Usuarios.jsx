@@ -6,6 +6,8 @@ import PageUser from "../../components/pages/UserPage";
 import Modal from "../../components/organisms/Modal";
 import FormField from "../../components/molecules/FormField";
 import SelectField from "../../components/molecules/SelectField";
+import SearchBar from "../../components/molecules/SearchBar";
+import UserTable from "../../components/organisms/UserTable";
 import { toast } from "sonner";
 
 function Usuarios() {
@@ -23,6 +25,8 @@ function Usuarios() {
   const [idEditar, setIdEditar] = useState(null);
   const [lista, setLista] = useState([{}]);
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [usuarios, setUsuarios] = useState([])
+  const [busqueda, setBusqueda] = useState("")
 
   const obtenerUsuario = async () => {
     try {
@@ -55,7 +59,7 @@ function Usuarios() {
       let response;
 
       if (modoEdicion) {
-        response = await axiosClient.put(`/usuarios/actualizar/${idEditar}`, datosProcesados, {
+        response = await axiosClient.put(`/usuarios/editar/${idEditar}`, datosProcesados, {
           headers: { 'Content-Type': 'application/json' }
         });
         toast.success("Usuario actualizado correctamente");
@@ -88,7 +92,7 @@ function Usuarios() {
 
     axiosClient.delete(`/usuarios/eliminar/${id}`)
       .then(respuesta => {
-        toast.success(respuesta.data || "Usuario eliminado");
+        toast.success("Usuario eliminado");
         obtenerUsuario();
       })
       .catch(error => {
@@ -122,6 +126,24 @@ function Usuarios() {
         toast.error("No se pudo cargar el área");
       });
   };
+  useEffect(() => {
+
+  const delay = setTimeout(async () => {
+
+    if (busqueda.trim() === "") {
+      obtenerUsuario()
+      return
+    }
+
+    const res = await axiosClient.get(`/usuarios/buscar/${busqueda}`)
+    setLista(res.data)
+
+  }, 500)
+
+  return () => clearTimeout(delay)
+
+}, [busqueda])
+
 
   const abrirModal = () => {
     setDatos({ id_usuario: "", correo_electronico: "", identificacion: "", nombre: "", apellidos: "", estado: "", id_rol: "", contraseña: "" });
@@ -138,16 +160,35 @@ function Usuarios() {
   };
 
   return (
-    <div className="container-fluid p-4">
+    
 
-      <PageUser
-        lista={lista}
-        abrirModal={abrirModal}
-        actualizarUsuario={actualizarUsuario}
-        eliminarUsuario={eliminarUsuario}
+      <div className="container-fluid p-4 bg-light min-vh-100">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 className="fw-bold mb-1">Gestión de Usuarios</h2>
+                </div>
+                <Button variant="success" onClick={abrirModal} className="rounded-pill px-4 shadow-sm">
+                    + Agregar Usuario
+                </Button>
+            </div>
 
+            <div className="card border-0 shadow-sm rounded-4">
+                <div className="card-body p-4">
+                    <div className="mb-4">
+                        <SearchBar
+                        busqueda={busqueda}
+                        setBusqueda={setBusqueda}
+                        />
+                    </div>
 
-      />
+                    <UserTable
+                        lista={lista}
+                        actualizarUsuario={actualizarUsuario}
+                        eliminarUsuario={eliminarUsuario}
+                    />
+                </div>
+            </div>
+        
 
       {mostrarModal && (
         <Modal

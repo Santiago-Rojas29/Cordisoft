@@ -52,7 +52,7 @@ export default function Materiales() {
       let response;
 
       if (modoEdicion) {
-        response = await axios.put(`http://localhost:3000/usuarios/actualizar/${idEditar}`, datosProcesados, {
+        response = await axios.put(`http://localhost:3000/usuarios/editar/${idEditar}`, datosProcesados, {
           headers: { 'Content-Type': 'application/json' }
         });
         toast.success("Usuario actualizado correctamente");
