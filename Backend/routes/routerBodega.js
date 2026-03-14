@@ -16,7 +16,7 @@ import { eliminarBodega } from '../controllers/controllerBodega.js'
 rutasBodegas.delete('/eliminar/:id',validarToken,eliminarBodega)
 
 import { buscarBodega } from '../controllers/controllerBodega.js'
-rutasBodegas.get('/buscar/:id',validarToken,buscarBodega)
+rutasBodegas.get('/buscar/:valor',validarToken,buscarBodega)
 
 
 export default rutasBodegas
