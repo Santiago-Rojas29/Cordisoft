@@ -1,22 +1,23 @@
 export default function CrudLayout({
     title,
     children,
-    onAdd
+    abrirModal,
+    style
     }){
 
     return(
 
-        <div className="container-fluid">
+        <div className="container-fluid p-4 bg-light min-vh-100" style={{borderRadius:"20px"}}>
 
-        <div className="d-flex justify-content-between mb-4">
+        <div className="d-flex justify-content-between align-items-center mb-4">
 
-            <h2>{title}</h2>
+            <h2 className="fw-bold mb-1">{title}</h2>
 
             <button
             className="btn btn-primary"
-            onClick={onAdd}
+            onClick={abrirModal}
             >
-            Nuevo
+            + Agregar nuevo
             </button>
 
         </div>

@@ -8,7 +8,7 @@ export default function UserForm({
 
     return(
 
-        <div className="row g-3">
+        <div className="row g-4">
 
         <Input
             label="Correo"
@@ -44,9 +44,22 @@ export default function UserForm({
             value={form.estado}
             onChange={onChange}
             options={[
-            {value:"activa",label:"Activa"},
-            {value:"inactiva",label:"Inactiva"}
+            {value:"Activo",label:"Activo"},
+            {value:"Inactivo",label:"Inactivo"}
             ]}
+        />
+        <Input
+        label="ID (Rol)"
+        name="id_rol"
+        value={form.id_rol}
+        onChange={onChange}
+        />
+
+        <Input
+        label="Contraseña"
+        name="contraseña"
+        value={form.contraseña}
+        onChange={onChange}
         />
 
         </div>

@@ -1,5 +1,5 @@
 import Button from "../../atoms/Users/actionButton"
-import UserForm from "../../molecules/Users/userForm"
+import UserForm from "../../molecules/Materials/materialsForm"
 
 export default function UserModal({
     show,
@@ -21,7 +21,7 @@ export default function UserModal({
 
             <div className="modal-header bg-light border-bottom-0 p-4">
 
-                <h5>Usuario</h5>
+                <h5>Materiales</h5>
 
                 <button
                 className="btn-close"

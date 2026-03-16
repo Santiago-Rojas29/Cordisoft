@@ -14,7 +14,7 @@ export default function UserRow({
         <td>{usuario.id_usuario}</td>
         <td>{usuario.correo_electronico}</td>
         <td>{usuario.identificacion}</td>
-        <td>{usuario.nombre}</td>
+        <td className="fw-medium">{usuario.nombre}</td>
         <td>{usuario.apellidos}</td>
 
         <td>

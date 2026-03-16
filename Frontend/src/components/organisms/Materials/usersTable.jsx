@@ -1,4 +1,4 @@
-import UserRow from "../../molecules/Users/userRow"
+import UserRow from "../../molecules/Materials/materialsRow"
 
 export default function UsersTable({
     lista,
@@ -15,12 +15,15 @@ export default function UsersTable({
                     <tr>
 
                     <th>ID</th>
-                    <th>Correo</th>
-                    <th>Identificación</th>
                     <th>Nombre</th>
-                    <th>Apellidos</th>
+                    <th>Codigo</th>
+                    <th>Tipo</th>
                     <th>Estado</th>
-                    <th>Rol</th>
+                    <th>Descripcion</th>
+                    <th>ID (Area)</th>
+                    <th>Cantidad</th>
+                    <th>ID (Bodega)</th>
+                    <th>ID (Ficha)</th>
                     <th>Acciones</th>
 
                     </tr>
@@ -29,10 +32,10 @@ export default function UsersTable({
 
                 <tbody className="border-top-0">
 
-                    {lista.map((usuario)=>(
+                    {lista.map((material)=>(
                     <UserRow
-                        key={usuario.id_usuario}
-                        usuario={usuario}
+                        key={material.id_material}
+                        material={material}
                         onEdit={onEdit}
                         onDelete={onDelete}
                     />

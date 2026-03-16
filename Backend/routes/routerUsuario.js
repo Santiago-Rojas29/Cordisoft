@@ -4,7 +4,8 @@ import { validarToken } from '../middleware/authMiddleware.js'
 const rutasUsuarios= express.Router()
 
 import { crearUsuario } from '../controllers/controllerUsuario.js'
-rutasUsuarios.post('/crear',crearUsuario)
+rutasUsuarios.post('/crear', validarToken, crearUsuario)
+
 
 import { listarUsuario } from '../controllers/controllerUsuario.js'
 rutasUsuarios.get('/listar',validarToken,listarUsuario)
@@ -16,7 +17,7 @@ import { eliminarUsuario } from '../controllers/controllerUsuario.js'
 rutasUsuarios.delete('/eliminar/:id',validarToken,eliminarUsuario)
 
 import { buscarUsuario } from '../controllers/controllerUsuario.js'
-rutasUsuarios.get('/buscar/:id',validarToken,buscarUsuario)
+rutasUsuarios.get('/buscar/:valor',validarToken,buscarUsuario)
 
 
 

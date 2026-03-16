@@ -58,6 +58,14 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
         <div className="flex-grow-1 p-2">
 
             <SidebarItem
+            to="/administrador/bodegas"
+            icon={faBoxOpen}
+            label="Bodegas"
+            active={isActive("/administrador/bodegas")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
             to="/administrador/materiales"
             icon={faBoxOpen}
             label="Materiales"

@@ -31,8 +31,8 @@ export const eliminarUsuario = async (req, resp) => {
 }
 
 export const buscarUsuario = async (req, resp) => {
-    const { id } = req.params
-    const sql = "select * from usuario where id_usuario=?"
-    const [resultado] = await conexionDb.query(sql, [id])
+    const { valor } = req.params
+    const sql = "select * from usuario where id_usuario=? or nombre like ? or correo_electronico like ?"
+    const [resultado] = await conexionDb.query(sql, [valor, `%${valor}%`, `%${valor}%`])
     resp.status(200).json(resultado)
 }

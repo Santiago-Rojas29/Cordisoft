@@ -5,6 +5,7 @@ import ProtectedRoute from "./routes/ProtectedRoute"
 import AdminLayout from "./components/templates/Home/adminLayout"
 
 import Dashboard from "./components/pages/Administrador/Dashboard.jsx"
+import Bodegas from "./components/pages/Administrador/Bodegas.jsx"
 import Areas from "./components/pages/Administrador/Areas.jsx"
 import Fichas from "./components/pages/Administrador/Fichas.jsx"
 import Materiales from "./components/pages/Administrador/Materiales.jsx"
@@ -32,6 +33,7 @@ function App() {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="bodegas" element={<Bodegas />} />
           <Route path="areas" element={<Areas />} />
           <Route path="fichas" element={<Fichas />} />
           <Route path="materiales" element={<Materiales />} />

@@ -3,7 +3,8 @@ export default function FormInput({
     name,
     value,
     onChange,
-    type="text"
+    type="text",
+    style
     }) {
 
     return (
@@ -17,8 +18,9 @@ export default function FormInput({
         <input
             type={type}
             name={name}
-            className="form-control"
+            className="form-control form-label fw-semibold text-secondary"
             value={value}
+            style={{ height: "auto", marginBottom: "0.25rem", ...style }}
             onChange={onChange}
         />
 

@@ -1,6 +1,6 @@
-import UserRow from "../../molecules/Users/userRow"
+import BodegasRow from "../../molecules/Bodegas/bodegasRow"
 
-export default function UsersTable({
+export default function BodegasTable({
     lista,
     onEdit,
     onDelete
@@ -15,12 +15,10 @@ export default function UsersTable({
                     <tr>
 
                     <th>ID</th>
-                    <th>Correo</th>
-                    <th>Identificación</th>
                     <th>Nombre</th>
-                    <th>Apellidos</th>
+                    <th>Ubicación</th>
                     <th>Estado</th>
-                    <th>Rol</th>
+                    <th>ID (Área)</th>
                     <th>Acciones</th>
 
                     </tr>
@@ -29,10 +27,10 @@ export default function UsersTable({
 
                 <tbody className="border-top-0">
 
-                    {lista.map((usuario)=>(
-                    <UserRow
-                        key={usuario.id_usuario}
-                        usuario={usuario}
+                    {lista.map((bodega)=>(
+                    <BodegasRow
+                        key={bodega.id_bodega}
+                        bodega={bodega}
                         onEdit={onEdit}
                         onDelete={onDelete}
                     />

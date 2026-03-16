@@ -4,7 +4,7 @@ export default function StatusBadge({estado}){
 
         <span
         className={`badge ${
-            estado === "Activo"
+            estado === "Consumible"
             ? "bg-success"
             : "bg-danger"
         }`}

@@ -1,7 +1,7 @@
 import Button from "../../atoms/Users/actionButton"
-import UserForm from "../../molecules/Users/userForm"
+import BodegasForm from "../../molecules/Bodegas/bodegasForm"
 
-export default function UserModal({
+export default function BodegasModal({
     show,
     onClose,
     onSave,
@@ -21,7 +21,7 @@ export default function UserModal({
 
             <div className="modal-header bg-light border-bottom-0 p-4">
 
-                <h5>Usuario</h5>
+                <h5>Bodega</h5>
 
                 <button
                 className="btn-close"
@@ -32,7 +32,7 @@ export default function UserModal({
 
             <div className="modal-body p-4">
 
-                <UserForm
+                <BodegasForm
                 form={form}
                 onChange={handleChange}
                 />

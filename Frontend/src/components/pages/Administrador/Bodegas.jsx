@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import axiosClient from "../../../Api/axiosClient"
 import CrudLayout from "../../../components/templates/Users/crudLayout"
-import UsersTable from "../../../components/organisms/Materials/usersTable"
-import UserModal from "../../../components/organisms/Materials/usersModal"
+import BodegasTable from "../../../components/organisms/Bodegas/bodegasTable"
+import BodegasModal from "../../../components/organisms/Bodegas/bodegasModal"
 import SearchBar from "../../../components/molecules/Users/searchBar"
 import { toast } from "sonner"
 
-export default function Materiales() {
+export default function Bodegas() {
 
   const [lista, setLista] = useState([])
   const [busqueda, setBusqueda] = useState("")
@@ -16,36 +16,31 @@ export default function Materiales() {
   const [idEditar, setIdEditar] = useState(null)
 
   const [form, setForm] = useState({
-    id_material: "",
-    nombre: "",
-    codigo: "",
-    tipo: "consumible",
-    estado: "",
-    descripcion: "",
-    id_area: "",
-    cantidad: "",
     id_bodega: "",
-    id_ficha: ""
+    nombre: "",
+    ubicacion: "",
+    estado: "",
+    id_area: ""
   })
 
-  const obtenerMaterial = async () => {
-    const res = await axiosClient.get("/materiales/listar")
+  const obtenerBodegas = async () => {
+    const res = await axiosClient.get("/bodegas/listar")
     setLista(res.data)
   }
 
   useEffect(() => {
-    obtenerMaterial()
+    obtenerBodegas()
   }, [])
 
   useEffect(() => {
     const delay = setTimeout(async () => {
 
       if (busqueda.trim() === "") {
-        obtenerMaterial()
+        obtenerBodegas()
         return
       }
 
-      const res = await axiosClient.get(`/materiales/buscar/${busqueda}`)
+      const res = await axiosClient.get(`/bodegas/buscar/${busqueda}`)
       setLista(res.data)
 
     }, 500)
@@ -53,13 +48,13 @@ export default function Materiales() {
     return () => clearTimeout(delay)
   }, [busqueda])
 
-  const eliminarMaterial = async (id) => {
+  const eliminarBodega = async (id) => {
 
-    if (!window.confirm("¿Eliminar material?")) return
+    if (!window.confirm("¿Eliminar bodega?")) return
 
-    await axiosClient.delete(`/materiales/eliminar/${id}`)
-    toast.success("Material eliminado")
-    obtenerMaterial()
+    await axiosClient.delete(`/bodegas/eliminar/${id}`)
+    toast.success("Bodega eliminada")
+    obtenerBodegas()
 
   }
 
@@ -75,50 +70,46 @@ export default function Materiales() {
   }
 
 
-  const guardarMaterial = async () => {
+  const guardarBodega = async () => {
 
     try {
 
       const datos = {
         ...form,
-        id_material: Number(form.id_material),
-        codigo: Number(form.codigo),
-        id_area: Number(form.id_area),
-        cantidad: Number(form.cantidad),
         id_bodega: Number(form.id_bodega),
-        id_ficha: Number(form.id_ficha)
+        id_area: Number(form.id_area)
       }
 
       if (modoEdicion) {
 
-        await axiosClient.put(`/materiales/editar/${idEditar}`, datos)
-        toast.success("Material actualizado")
+        await axiosClient.put(`/bodegas/editar/${idEditar}`, datos)
+        toast.success("Bodega actualizada")
 
       } else {
 
-        await axiosClient.post("/materiales/crear", datos)
-        toast.success("Material creado")
+        await axiosClient.post("/bodegas/crear", datos)
+        toast.success("Bodega creada")
 
       }
 
-      obtenerMaterial()
+      obtenerBodegas()
       cerrarModal()
 
     } catch (error) {
 
       console.error(error)
-      toast.error("Error al guardar material")
+      toast.error("Error al guardar usuario")
 
     }
 
   }
 
 
-  const editarMaterial = (material) => {
+  const editarBodega = (bodega) => {
 
-    setForm(material)
+    setForm(bodega)
     setModoEdicion(true)
-    setIdEditar(material.id_material)
+    setIdEditar(bodega.id_bodega)
     setShowModal(true)
 
   }
@@ -127,16 +118,11 @@ export default function Materiales() {
   const abrirModal = () => {
 
     setForm({
-      id_material: "",
-      nombre: "",
-      codigo: "",
-      tipo: "consumible",
-      estado: "",
-      descripcion: "",
-      id_area: "",
-      cantidad: "",
       id_bodega: "",
-      id_ficha: ""
+      nombre: "",
+      ubicacion: "",
+      estado: "",
+      id_area: ""
     })
 
     setModoEdicion(false)
@@ -157,7 +143,7 @@ export default function Materiales() {
   return (
 
     <CrudLayout
-      title="Materiales"
+      title="Bodegas"
       abrirModal={abrirModal}
     >
 
@@ -166,18 +152,18 @@ export default function Materiales() {
         onChange={(e) => setBusqueda(e.target.value)}
       />
 
-      <UsersTable
+      <BodegasTable
         lista={lista}
-        onDelete={eliminarMaterial}
-        onEdit={editarMaterial}
+        onDelete={eliminarBodega}
+        onEdit={editarBodega}
       />
 
-      <UserModal
+      <BodegasModal
         show={showModal}
         onClose={cerrarModal}
         form={form}
         handleChange={handleChange}
-        onSave={guardarMaterial}
+        onSave={guardarBodega}
       />
 
     </CrudLayout>

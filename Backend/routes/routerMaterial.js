@@ -16,7 +16,7 @@ import { eliminarMaterial } from '../controllers/controllerMaterial.js'
 rutasMateriales.delete('/eliminar/:id',validarToken,eliminarMaterial)
 
 import { buscarMaterial } from '../controllers/controllerMaterial.js'
-rutasMateriales.get('/buscar/:id',validarToken,buscarMaterial)
+rutasMateriales.get('/buscar/:valor',validarToken,buscarMaterial)
 
 
 export default rutasMateriales
