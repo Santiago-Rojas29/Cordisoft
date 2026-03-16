@@ -8,7 +8,7 @@ export const crearFicha = async (req, resp) => {
 }
 
 export const listarFicha = async (req, resp) => {
-    const sql = "select * from ficha"
+    const sql = "SELECT f.id_ficha, f.nombre, f.estado, f.id_area, f.id_usuario, a.nombre AS area, u.nombre AS usuario, f.codigo FROM ficha f JOIN areas a ON f.id_area = a.id_area JOIN usuario u ON f.id_usuario = u.id_usuario;"
     const [resultado] = await conexionDb.query(sql)
     resp.status(200).json(resultado)
 }

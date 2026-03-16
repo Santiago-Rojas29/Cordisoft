@@ -16,7 +16,7 @@ import { eliminarArea } from '../controllers/controllerArea.js'
 rutasArea.delete('/eliminar/:id',validarToken,eliminarArea)
 
 import { buscarArea } from '../controllers/controllerArea.js'
-rutasArea.get('/buscar/:id',validarToken,buscarArea)
+rutasArea.get("/buscar/:texto",validarToken, buscarArea)
 
 
 export default rutasArea;
