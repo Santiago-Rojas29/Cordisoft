@@ -1,12 +1,13 @@
 import Button from "../../atoms/Users/actionButton"
-import UserForm from "../../molecules/Materials/materialsForm"
+import MaterialsForm from "../../molecules/Materials/materialsForm"
 
 export default function UserModal({
     show,
     onClose,
     onSave,
     form,
-    handleChange
+    handleChange,
+    areas
     }){
 
     if(!show) return null
@@ -32,9 +33,10 @@ export default function UserModal({
 
             <div className="modal-body p-4">
 
-                <UserForm
+                <MaterialsForm
                 form={form}
                 onChange={handleChange}
+                areas={areas}
                 />
 
             </div>

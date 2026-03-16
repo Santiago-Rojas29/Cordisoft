@@ -20,11 +20,11 @@ export default function AreaModal({
         style={{backgroundColor:"rgba(0,0,0,0.5)"}}
         >
 
-        <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 
-            <div className="modal-content">
+            <div className="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
 
-            <div className="modal-header">
+            <div className="modal-header bg-light border-bottom-0 p-4">
 
                 <h5>
                 {modoEdicion
@@ -49,7 +49,7 @@ export default function AreaModal({
 
             </div>
 
-            <div className="modal-footer">
+            <div className="modal-footer border-top-0 bg-light p-4modal-footer">
 
                 <Button
                 label="Cancelar"

@@ -2,9 +2,12 @@ import Button from "../../atoms/Users/actionButton"
 
 export default function BodegasRow({
     bodega,
+    areas,
     onEdit,
     onDelete
     }){
+
+        const area = areas.find(a => a.id_area ===  bodega.id_area)
 
     return(
 
@@ -13,9 +16,9 @@ export default function BodegasRow({
         <td>{bodega.id_bodega}</td>
         <td>{bodega.nombre}</td>
         <td>{bodega.ubicacion}</td>
-        <td>{bodega.estado}</td>
+        <td>{bodega.estado}</td>    
 
-        <td>{bodega.id_area}</td>
+        <td>{area ? area.nombre : "Sin area"}</td>
 
         <td className="d-flex gap-2">
 

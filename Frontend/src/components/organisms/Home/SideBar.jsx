@@ -113,13 +113,6 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
             collapsed={collapsed}
             />
 
-            <SidebarItem
-            to="/administrador/actualizarStock"
-            icon={faBoxOpen}
-            label="Actualizar Stock"
-            active={isActive("/administrador/actualizarStock")}
-            collapsed={collapsed}
-            />
 
             <SidebarItem
             to="/administrador/solicitudes"

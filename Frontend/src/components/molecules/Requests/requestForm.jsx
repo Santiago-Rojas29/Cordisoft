@@ -3,13 +3,11 @@ import Input from '../../atoms/Users/formInput';
 
 export default function RequestForm({ form, onChange, materialesSeleccionados, fichas, aprendices, onCantidadChange }) {
 
-    // Helper para formatear fichas en el select
     const opcionesFichas = fichas.map(ficha => ({
         value: ficha.id_ficha,
         label: `${ficha.codigo} - ${ficha.nombre}`
     }));
 
-    // Helper para formatear aprendices en el select
     const opcionesAprendices = aprendices.map(apr => ({
         value: apr.id_aprendiz,
         label: `${apr.documento} - ${apr.nombre} - Ficha ${apr.id_ficha}`
@@ -18,7 +16,6 @@ export default function RequestForm({ form, onChange, materialesSeleccionados, f
     return (
         <div className="text-start">
 
-            {/* Listado de Materiales Seleccionados tipo "Carrito" */}
             <div className="mb-4">
                 <label className="form-label fw-bold">Materiales Elegidos</label>
                 
@@ -63,7 +60,6 @@ export default function RequestForm({ form, onChange, materialesSeleccionados, f
                 )}
             </div>
 
-            {/* Datos Generales de la Solicitud */}
             <div className="row g-4 mt-2">
                 
                 <div className="col-md-12">
