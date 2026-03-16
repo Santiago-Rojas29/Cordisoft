@@ -2,6 +2,7 @@ export default function CrudLayout({
     title,
     children,
     abrirModal,
+    headerAction,
     style
     }){
 
@@ -13,12 +14,16 @@ export default function CrudLayout({
 
             <h2 className="fw-bold mb-1">{title}</h2>
 
-            <button
-            className="btn btn-primary"
-            onClick={abrirModal}
-            >
-            + Agregar nuevo
-            </button>
+            {headerAction ? (
+                headerAction
+            ) : abrirModal ? (
+                <button
+                    className="btn btn-primary"
+                    onClick={abrirModal}
+                >
+                    + Agregar nuevo
+                </button>
+            ) : null}
 
         </div>
 

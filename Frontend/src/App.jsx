@@ -3,6 +3,8 @@ import Login from "./components/pages/Login"
 import Instructor from "./components/pages/Instructor/Instructor.jsx"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import AdminLayout from "./components/templates/Home/adminLayout"
+import InstructorLayout from "./components/templates/Home/InstuctorLayout"
+import Solicitar from "./components/pages/Instructor/Solicitar.jsx"
 
 import Dashboard from "./components/pages/Administrador/Dashboard.jsx"
 import Bodegas from "./components/pages/Administrador/Bodegas.jsx"
@@ -49,10 +51,17 @@ function App() {
           path="/instructor"
           element={
             <ProtectedRoute>
-              <Instructor />
+              <InstructorLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<Instructor />} />
+          <Route path="usuario" element={<Instructor />} />
+          <Route path="notificaciones" element={<Instructor />} />
+          <Route path="solicitar" element={<Solicitar />} />
+          <Route path="historial-solicitudes" element={<Instructor />} />
+          <Route path="materiales-asignados" element={<Instructor />} />
+        </Route>
 
       </Routes>
     </BrowserRouter>
