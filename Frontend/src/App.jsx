@@ -17,6 +17,7 @@ import Usuarios from "./components/pages/Administrador/Usuarios.jsx"
 import Solicitudes from "./components/pages/Administrador/Solicitudes.jsx"
 import VerificacionMateriales from "./components/pages/Administrador/VerificacionMateriales.jsx"
 import ActualizarStock from "./components/pages/Administrador/ActualizarStock.jsx"
+import ChatBot from "./components/pages/Administrador/ChatBot.jsx"
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="notificaciones" element={<Notificaciones />} />
           <Route path="actualizarStock" element={<ActualizarStock />} />
           <Route path="verificacionMateriales" element={<VerificacionMateriales/>} />
+          <Route path="chatBot" element={<ChatBot/>} />
         </Route>
 
         <Route
