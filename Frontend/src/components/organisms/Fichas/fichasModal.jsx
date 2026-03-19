@@ -13,13 +13,13 @@
 
     return(
 
-    <div className="modal fade show d-block">
+    <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
 
-    <div className="modal-dialog">
+    <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 
-    <div className="modal-content">
+    <div className="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
 
-    <div className="modal-header">
+    <div className="modal-header bg-light border-bottom-0 p-4">
 
     <h5>
 
@@ -140,7 +140,7 @@
 
     </div>
 
-    <div className="modal-footer">
+    <div className="modal-footer border-top-0 bg-light p-4modal-footer">
 
     <button
     className="btn btn-secondary"

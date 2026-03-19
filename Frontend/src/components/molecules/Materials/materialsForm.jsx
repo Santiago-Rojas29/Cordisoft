@@ -1,9 +1,10 @@
 import Input from "../../atoms/Users/formInput"
 import Select from "../../atoms/Users/selectItem"
 
-export default function UserForm({
+export default function MaterialsForm({
     form,
-    onChange
+    onChange,
+    areas
     }){
 
     return(
@@ -49,11 +50,15 @@ export default function UserForm({
             onChange={onChange}
         />
 
-        <Input
+        <Select
         label="ID (Area)"
         name="id_area"
         value={form.id_area}
         onChange={onChange}
+        options={areas.map(area => ({
+            value: area.id_area,
+            label: area.nombre
+        }))}
         />
 
         <Input

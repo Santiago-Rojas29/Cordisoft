@@ -5,11 +5,13 @@ import UsersTable from "../../../components/organisms/Materials/usersTable"
 import UserModal from "../../../components/organisms/Materials/usersModal"
 import SearchBar from "../../../components/molecules/Users/searchBar"
 import { toast } from "sonner"
+import axios from "axios"
 
 export default function Materiales() {
 
   const [lista, setLista] = useState([])
-  const [busqueda, setBusqueda] = useState("")
+  const [areas, setAreas] = useState([])
+   const [busqueda, setBusqueda] = useState("")
 
   const [showModal, setShowModal] = useState(false)
   const [modoEdicion, setModoEdicion] = useState(false)
@@ -35,6 +37,15 @@ export default function Materiales() {
 
   useEffect(() => {
     obtenerMaterial()
+  }, [])
+
+  const obtenerAreas = async () => {
+    const res = await axiosClient.get("/areas/listar")
+    setAreas(res.data)
+  }
+
+  useEffect(() => {
+    obtenerAreas()
   }, [])
 
   useEffect(() => {
@@ -178,6 +189,7 @@ export default function Materiales() {
         form={form}
         handleChange={handleChange}
         onSave={guardarMaterial}
+        areas={areas}
       />
 
     </CrudLayout>

@@ -1,8 +1,10 @@
 import Input from "../../atoms/Users/formInput"
+import Select from "../../atoms/Users/selectItem"
 
 export default function BodegasForm({
     form,
-    onChange
+    onChange,
+    areas
     }){
 
     return(
@@ -30,11 +32,15 @@ export default function BodegasForm({
             onChange={onChange}
         />
 
-        <Input
+        <Select
             label="ID (Área)"
             name="id_area"
             value={form.id_area}
             onChange={onChange}
+            options={areas.map(area => ({
+                value: area.id_area,
+                label:area.nombre
+            }))}
         />
 
         </div>

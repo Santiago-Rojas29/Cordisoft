@@ -1,5 +1,4 @@
 import Button from "../../atoms/Users/actionButton"
-import StatusBadge from "../../atoms/Materials/statusBadge"
 
 export default function UserRow({
     material,
@@ -15,7 +14,7 @@ export default function UserRow({
         <td>{material.nombre}</td>
         <td>{material.codigo}</td>
         <td>
-            <StatusBadge estado={material.tipo}/>
+            {material.tipo}
         </td>
         <td>{material.estado}</td>
         <td>{material.descripcion}</td>

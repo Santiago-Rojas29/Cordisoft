@@ -2,6 +2,7 @@ import BodegasRow from "../../molecules/Bodegas/bodegasRow"
 
 export default function BodegasTable({
     lista,
+    areas,
     onEdit,
     onDelete
     }){
@@ -31,6 +32,7 @@ export default function BodegasTable({
                     <BodegasRow
                         key={bodega.id_bodega}
                         bodega={bodega}
+                        areas={areas}
                         onEdit={onEdit}
                         onDelete={onDelete}
                     />
