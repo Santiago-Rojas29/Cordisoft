@@ -14,7 +14,8 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
     faBell,
     faBoxOpen,
     faClipboardList,
-    faCheckCircle
+    faCheckCircle,
+    faRobot
     } from "@fortawesome/free-solid-svg-icons";
 
     export default function Sidebar({ collapsed, toggleSidebar }) {
@@ -127,6 +128,14 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
             icon={faCheckCircle}
             label="Verificación"
             active={isActive("/administrador/verificacionMateriales")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/chatBot"
+            icon={faRobot}
+            label="Chat Bot IA"
+            active={isActive("/administrador/chatBot")}
             collapsed={collapsed}
             />
 
