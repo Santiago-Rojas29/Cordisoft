@@ -1,20 +1,24 @@
 import Button from "../../atoms/Users/actionButton"
-import MaterialsForm from "../../molecules/Materials/materialsForm"
+import AreaForm from "../../molecules/Areas/areaForm"
 
-export default function UserModal({
+export default function AreaModal({
     show,
     onClose,
     onSave,
     form,
-    handleChange,
-    areas
+    onChange,
+    modoEdicion,
+    usuarios
     }){
 
     if(!show) return null
 
     return(
 
-        <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+        <div
+        className="modal fade show d-block"
+        style={{backgroundColor:"rgba(0,0,0,0.5)"}}
+        >
 
         <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 
@@ -22,7 +26,11 @@ export default function UserModal({
 
             <div className="modal-header bg-light border-bottom-0 p-4">
 
-                <h5>Materiales</h5>
+                <h5>
+                {modoEdicion
+                    ? "Actualizar Área"
+                    : "Nueva Área"}
+                </h5>
 
                 <button
                 className="btn-close"
@@ -31,17 +39,17 @@ export default function UserModal({
 
             </div>
 
-            <div className="modal-body p-4">
+            <div className="modal-body">
 
-                <MaterialsForm
+                <AreaForm
                 form={form}
-                onChange={handleChange}
-                areas={areas}
+                onChange={onChange}
+                usuarios={usuarios}
                 />
 
             </div>
 
-            <div className="modal-footer border-top-0 bg-light p-4">
+            <div className="modal-footer border-top-0 bg-light p-4modal-footer">
 
                 <Button
                 label="Cancelar"
@@ -50,7 +58,8 @@ export default function UserModal({
                 />
 
                 <Button
-                label="Guardar"
+                label={modoEdicion ? "Actualizar":"Guardar"}
+                color="success"
                 onClick={onSave}
                 />
 

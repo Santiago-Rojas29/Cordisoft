@@ -5,11 +5,13 @@ import BodegasTable from "../../../components/organisms/Bodegas/bodegasTable"
 import BodegasModal from "../../../components/organisms/Bodegas/bodegasModal"
 import SearchBar from "../../../components/molecules/Users/searchBar"
 import { toast } from "sonner"
+import axios from "axios"
 
 export default function Bodegas() {
 
   const [lista, setLista] = useState([])
   const [busqueda, setBusqueda] = useState("")
+  const [areas, setAreas] = useState([])
 
   const [showModal, setShowModal] = useState(false)
   const [modoEdicion, setModoEdicion] = useState(false)
@@ -28,8 +30,18 @@ export default function Bodegas() {
     setLista(res.data)
   }
 
+
   useEffect(() => {
     obtenerBodegas()
+  }, [])
+
+    const obtenerAreas = async () => {
+    const res = await axiosClient.get("/areas/listar")
+    setAreas(res.data)
+  }
+
+  useEffect(() => {
+    obtenerAreas()
   }, [])
 
   useEffect(() => {
@@ -154,6 +166,7 @@ export default function Bodegas() {
 
       <BodegasTable
         lista={lista}
+        areas={areas}
         onDelete={eliminarBodega}
         onEdit={editarBodega}
       />
@@ -164,6 +177,7 @@ export default function Bodegas() {
         form={form}
         handleChange={handleChange}
         onSave={guardarBodega}
+        areas={areas}
       />
 
     </CrudLayout>

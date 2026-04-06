@@ -6,7 +6,6 @@ export default function SolicitudesRow({
     onApprove,
     onReject
 }) {
-    // Definimos colores según el estado
     const badgeColor = 
         solicitud.estado === "Aprobada" ? "success" : 
         solicitud.estado === "Rechazada" ? "danger" : 
@@ -34,7 +33,6 @@ export default function SolicitudesRow({
                         onClick={() => onViewDetails(solicitud)} 
                     />
                     
-                    {/* Botones de acción sólo si está Pendiente */}
                     {isPending && (
                         <>
                             <ActionButton 

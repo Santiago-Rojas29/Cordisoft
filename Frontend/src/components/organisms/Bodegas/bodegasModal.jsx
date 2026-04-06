@@ -6,7 +6,8 @@ export default function BodegasModal({
     onClose,
     onSave,
     form,
-    handleChange
+    handleChange,
+    areas
     }){
 
     if(!show) return null
@@ -35,6 +36,7 @@ export default function BodegasModal({
                 <BodegasForm
                 form={form}
                 onChange={handleChange}
+                areas={areas}
                 />
 
             </div>
