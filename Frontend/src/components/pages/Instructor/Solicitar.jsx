@@ -11,30 +11,25 @@ import RequestFormModal from "../../../components/organisms/Requests/requestForm
 
 export default function Solicitar() {
 
-  // Listas de datos desde el backend
   const [listaMateriales, setListaMateriales] = useState([])
   const [listaAprendices, setListaAprendices] = useState([])
   const [listaFichas, setListaFichas] = useState([])
   const [busqueda, setBusqueda] = useState("")
 
-  // Estado del "Carrito" de materiales seleccionados
   const [materialesSeleccionados, setMaterialesSeleccionados] = useState([])
 
-  // Estado del Modal
   const [showModal, setShowModal] = useState(false)
 
-  // Datos globales de la solicitud a guardar
   const [form, setForm] = useState({
       id_ficha: "",
       id_aprendiz: ""
   });
 
-  // 1️⃣ OBTENER DATOS
   const obtenerDatos = async () => {
     try {
         const [resMat, resApr, resFichas] = await Promise.all([
             axiosClient.get("/materiales/listar"),
-            axiosClient.get("/aprendiz/listar").catch(() => axiosClient.get("/aprendices/listar")), // fallback por si la URL cambió
+            axiosClient.get("/aprendiz/listar").catch(() => axiosClient.get("/aprendices/listar")), 
             axiosClient.get("/ficha/listar").catch(() => axiosClient.get("/fichas/listar"))
         ]);
         setListaMateriales(resMat.data)
@@ -49,12 +44,9 @@ export default function Solicitar() {
     obtenerDatos()
   }, [])
 
-  // BÚSQUEDA EN TIEMPO REAL (De materiales)
   useEffect(() => {
     const delay = setTimeout(async () => {
       if (busqueda.trim() === "") {
-        // Podríamos recargar aquí pero para evitar saltos, 
-        // solo refetch cuando se borra el buscador
         axiosClient.get("/materiales/listar").then(res => setListaMateriales(res.data));
         return
       }
@@ -62,26 +54,22 @@ export default function Solicitar() {
         const res = await axiosClient.get(`/materiales/buscar/${busqueda}`)
         setListaMateriales(res.data)
       } catch (error) {
-          // Ignorar silenciosamente
       }
     }, 500)
 
     return () => clearTimeout(delay)
   }, [busqueda])
 
-  // MANEJO DE SELECCIÓN MÚLTIPLE (CARRITO)
   const handleToggleMaterial = (material) => {
       setMaterialesSeleccionados(prev => {
           const yaExiste = prev.some(item => item.id_material === material.id_material);
           if (yaExiste) {
-              // Si existe, lo quitamos
               return prev.filter(item => item.id_material !== material.id_material);
           } else {
-              // Si no existe, lo agregamos con cantidad base 1
               return [...prev, { 
                   ...material, 
                   cantidad_solicitada: 1,
-                  cantidad_stock: material.cantidad // Guardamos la referencia de max stock temporalmente
+                  cantidad_stock: material.cantidad 
               }];
           }
       });
@@ -96,7 +84,6 @@ export default function Solicitar() {
       }));
   }
 
-  // MANEJO ESTÁNDAR DE INPUTS
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({
@@ -105,16 +92,14 @@ export default function Solicitar() {
     }));
   }
 
-  // 2️⃣ GUARDAR SOLICITUD MÚLTIPLE
   const guardarSolicitud = async (e) => {
     if (e) e.preventDefault();
 
-    // Validación básica
     if (materialesSeleccionados.length === 0) {
         toast.error("Agrega al menos un material a la solicitud.");
         return;
     }
-    if (!form.id_aprendiz) { // Ficha puede ser opcional o requerida, controlaremos aprendiz.
+    if (!form.id_aprendiz) { 
         toast.error("Por favor selecciona un aprendiz.");
         return;
     }
@@ -123,7 +108,6 @@ export default function Solicitar() {
         const userStr = localStorage.getItem("user");
         const userData = userStr ? JSON.parse(userStr) : null;
         
-        // El backend devuelve 'id' en el login (controllerLogin.js)
         const finalUserId = userData ? (userData.id || userData.id_usuario) : null;
 
         if (!finalUserId) {
@@ -131,7 +115,6 @@ export default function Solicitar() {
             return;
         }
 
-        // A. Crear Solicitud Principal
         const resSolicitud = await axiosClient.post("/solicitudes/crear", {
             id_usuario: finalUserId,
             tipo_solicitud: "Prestamo",
@@ -142,7 +125,6 @@ export default function Solicitar() {
 
         const id_solicitud = resSolicitud.data?.insertId || resSolicitud.data?.id_solicitud || resSolicitud.data || 1; 
 
-        // B. Crear todos los Detalles de manera concurrente
         const promesasDetalles = materialesSeleccionados.map(material => {
             return axiosClient.post("/detalleSolicitudes/crear", {
                 id_solicitud: id_solicitud,
@@ -155,7 +137,7 @@ export default function Solicitar() {
         await Promise.all(promesasDetalles);
 
         toast.success("Solicitud creada con éxito");
-        setMaterialesSeleccionados([]); // Limpiamos carrito
+        setMaterialesSeleccionados([]); 
         cerrarModal();
 
     } catch (error) {
@@ -164,7 +146,6 @@ export default function Solicitar() {
     }
   }
 
-  // 3️⃣ CONTROLES DE INTERFAZ
   const abrirModal = () => {
     setShowModal(true)
   }
@@ -190,7 +171,6 @@ export default function Solicitar() {
           />
       </div>
 
-      {/* Pasamos onToggle en vez de onSelect, y proveemos la lista seleccionada */}
       <RequestsMaterialTable
         lista={listaMateriales}
         onToggle={handleToggleMaterial}

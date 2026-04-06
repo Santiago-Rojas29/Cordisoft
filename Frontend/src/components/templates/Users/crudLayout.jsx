@@ -18,7 +18,6 @@ export default function CrudLayout({
             style={{ borderRadius: "20px" }}
         >
 
-            {/* HEADER */}
             <div className="d-flex justify-content-between align-items-center mb-4">
 
                 <h2 className="fw-bold mb-1">{title}</h2>

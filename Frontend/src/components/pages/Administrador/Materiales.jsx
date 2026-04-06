@@ -11,7 +11,9 @@ export default function Materiales() {
 
   const [lista, setLista] = useState([])
   const [areas, setAreas] = useState([])
-   const [busqueda, setBusqueda] = useState("")
+  const [bodega, setBodegas] = useState([])
+  const [ficha, setFicha] = useState([])
+  const [busqueda, setBusqueda] = useState("")
 
   const [showModal, setShowModal] = useState(false)
   const [modoEdicion, setModoEdicion] = useState(false)
@@ -46,6 +48,24 @@ export default function Materiales() {
 
   useEffect(() => {
     obtenerAreas()
+  }, [])
+
+  const obtenerBodega = async () => {
+    const res = await axiosClient.get("/bodegas/listar")
+    setBodegas(res.data)
+  }
+
+  useEffect(() => {
+    obtenerBodega()
+  }, [])
+
+  const obtenerFicha = async () => {
+    const res = await axiosClient.get("/fichas/listar")
+    setFicha(res.data)
+  }
+
+  useEffect(() => {
+    obtenerFicha()
   }, [])
 
   useEffect(() => {
@@ -190,6 +210,8 @@ export default function Materiales() {
         handleChange={handleChange}
         onSave={guardarMaterial}
         areas={areas}
+        bodega={bodega}
+        ficha={ficha}
       />
 
     </CrudLayout>

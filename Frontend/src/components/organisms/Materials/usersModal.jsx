@@ -7,7 +7,9 @@ export default function UserModal({
     onSave,
     form,
     handleChange,
-    areas
+    areas,
+    bodega,
+    ficha
     }){
 
     if(!show) return null
@@ -37,6 +39,8 @@ export default function UserModal({
                 form={form}
                 onChange={handleChange}
                 areas={areas}
+                bodega={bodega}
+                ficha={ficha}
                 />
 
             </div>

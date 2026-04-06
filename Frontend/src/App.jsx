@@ -35,7 +35,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route path="dashboard" index element={<Dashboard />} />
           <Route path="bodegas" element={<Bodegas />} />
           <Route path="areas" element={<Areas />} />
           <Route path="fichas" element={<Fichas />} />

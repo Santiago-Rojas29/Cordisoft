@@ -4,7 +4,9 @@ import Select from "../../atoms/Users/selectItem"
 export default function MaterialsForm({
     form,
     onChange,
-    areas
+    areas,
+    bodega,
+    ficha
     }){
 
     return(
@@ -68,18 +70,26 @@ export default function MaterialsForm({
         onChange={onChange}
         />
 
-        <Input
+        <Select
         label="ID (Bodega)"
         name="id_bodega"
         value={form.id_bodega}
         onChange={onChange}
+        options={bodega.map(bodega => ({
+            value: bodega.id_bodega,
+            label: bodega.nombre
+        }))}
         />
 
-        <Input
+        <Select
         label="ID (Ficha)"
         name="id_ficha"
         value={form.id_ficha}
         onChange={onChange}
+        options={ficha.map(ficha => ({
+            value: ficha.id_ficha,
+            label: ficha.codigo
+        }))}
         />
 
         </div>
