@@ -6,6 +6,7 @@ export default function UserModal({
     onClose,
     onSave,
     form,
+    roles = [],
     handleChange
     }){
 
@@ -34,6 +35,7 @@ export default function UserModal({
 
                 <UserForm
                 form={form}
+                roles={roles}
                 onChange={handleChange}
                 />
 

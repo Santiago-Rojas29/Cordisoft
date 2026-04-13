@@ -2,11 +2,12 @@ import UserRow from "../../molecules/Users/userRow"
 
 export default function UsersTable({
     lista,
+    roles = [],
     onEdit,
     onDelete
-    }){
+}) {
 
-    return(
+    return (
         <div className="table-responsive shadow-sm rounded-4 bg-white p-2">
             <table className="table table-hover align-middle mb-0">
 
@@ -14,14 +15,14 @@ export default function UsersTable({
 
                     <tr>
 
-                    <th>ID</th>
-                    <th>Correo</th>
-                    <th>Identificación</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Estado</th>
-                    <th>Rol</th>
-                    <th>Acciones</th>
+                        <th>ID</th>
+                        <th>Correo</th>
+                        <th>Identificación</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Estado</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
 
                     </tr>
 
@@ -29,20 +30,21 @@ export default function UsersTable({
 
                 <tbody className="border-top-0">
 
-                    {lista.map((usuario)=>(
-                    <UserRow
-                        key={usuario.id_usuario}
-                        usuario={usuario}
-                        onEdit={onEdit}
-                        onDelete={onDelete}
-                    />
+                    {lista.map((usuario) => (
+                        <UserRow
+                            key={usuario.id_usuario}
+                            usuario={usuario}
+                            roles={roles}
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                        />
                     ))}
 
                 </tbody>
 
-                </table>
-            </div>
+            </table>
+        </div>
 
-        )
+    )
 
 }

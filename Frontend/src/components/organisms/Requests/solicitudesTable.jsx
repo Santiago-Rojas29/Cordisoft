@@ -2,6 +2,7 @@ import SolicitudesRow from "../../molecules/Requests/solicitudesRow"
 
 export default function SolicitudesTable({
     lista,
+    usuarios = [],
     onViewDetails,
     onApprove,
     onReject
@@ -13,7 +14,7 @@ export default function SolicitudesTable({
                 <thead className="table-light text-secondary">
                     <tr>
                         <th>ID Solicitud</th>
-                        <th>ID Usuario</th>
+                        <th>Instructor</th>
                         <th>Tipo</th>
                         <th>Fecha Creación</th>
                         <th>Fecha Entrega</th>
@@ -29,6 +30,7 @@ export default function SolicitudesTable({
                         <SolicitudesRow
                             key={solicitud.id_solicitud}
                             solicitud={solicitud}
+                            usuarios={usuarios}
                             onViewDetails={onViewDetails}
                             onApprove={onApprove}
                             onReject={onReject}

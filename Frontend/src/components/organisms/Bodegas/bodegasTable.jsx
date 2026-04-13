@@ -5,9 +5,9 @@ export default function BodegasTable({
     areas,
     onEdit,
     onDelete
-    }){
+}) {
 
-    return(
+    return (
         <div className="table-responsive shadow-sm rounded-4 bg-white p-2">
             <table className="table table-hover align-middle mb-0">
 
@@ -15,12 +15,12 @@ export default function BodegasTable({
 
                     <tr>
 
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Ubicación</th>
-                    <th>Estado</th>
-                    <th>ID (Área)</th>
-                    <th>Acciones</th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                        <th>Estado</th>
+                        <th>Área</th>
+                        <th>Acciones</th>
 
                     </tr>
 
@@ -28,21 +28,21 @@ export default function BodegasTable({
 
                 <tbody className="border-top-0">
 
-                    {lista.map((bodega)=>(
-                    <BodegasRow
-                        key={bodega.id_bodega}
-                        bodega={bodega}
-                        areas={areas}
-                        onEdit={onEdit}
-                        onDelete={onDelete}
-                    />
+                    {lista.map((bodega) => (
+                        <BodegasRow
+                            key={bodega.id_bodega}
+                            bodega={bodega}
+                            areas={areas}
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                        />
                     ))}
 
                 </tbody>
 
-                </table>
-            </div>
+            </table>
+        </div>
 
-        )
+    )
 
 }

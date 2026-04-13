@@ -8,7 +8,7 @@ export const crearSolicitud = async (req, resp) => {
     if (tipo_solicitud === 'prestamo') {
         const sqlPrestamo = `INSERT INTO prestamo (id_solicitud, fecha_inicio, estado_prestamo) VALUES (?,?,?)`
         await conexionDb.query(sqlPrestamo, [
-            idSolicitud, fecha_creacion, 'activo'
+            idSolicitud, fecha_creacion, 'pendiente'
         ])
     }
     resp.status(200).json({resultado, id_solicitud: idSolicitud})
@@ -25,6 +25,13 @@ export const editarSolicitud = async (req, resp) => {
     const { id_usuario, tipo_solicitud, fecha_creacion, fecha_entrega, estado } = req.body
     const sql = "update solicitud set id_usuario=?, tipo_solicitud=?, fecha_creacion=?, fecha_entrega=?, estado=? where id_solicitud=?"
     const [resultado] = await conexionDb.query(sql, [id_usuario, tipo_solicitud, fecha_creacion, fecha_entrega, estado, id])
+    
+    // Activar préstamo si se aprueba desde Administrador
+    if (tipo_solicitud?.toLowerCase() === 'prestamo' && estado === 'Aprobada') {
+        const sqlPrestamo = "update prestamo set estado_prestamo='activo' where id_solicitud=? and estado_prestamo='pendiente'";
+        await conexionDb.query(sqlPrestamo, [id]);
+    }
+    
     resp.status(200).json(resultado)
 }
 

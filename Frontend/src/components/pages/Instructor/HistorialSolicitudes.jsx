@@ -13,14 +13,16 @@ export default function HistorialSolicitudes() {
     const [solicitudes, setSolicitudes] = useState([])
     const [busqueda, setBusqueda] = useState("")
 
-    // Estados para el Modal de Detalles
+    const [usuarios, setUsuarios] = useState([])
+    const [materiales, setMateriales] = useState([])
+    const [aprendices, setAprendices] = useState([])
+
     const [showModal, setShowModal] = useState(false)
     const [solicitudActiva, setSolicitudActiva] = useState(null)
     const [detallesActivos, setDetallesActivos] = useState([])
 
     const obtenerSolicitudes = async () => {
         try {
-            // Get user session to filter their own requests
             const userStr = localStorage.getItem("user");
             const userData = userStr ? JSON.parse(userStr) : null;
             const finalUserId = userData ? (userData.id || userData.id_usuario) : null;
@@ -30,11 +32,18 @@ export default function HistorialSolicitudes() {
                 return;
             }
 
-            // Using the endpoint that attaches prestamo tracking data as well
-            const res = await axiosClient.get("/solicitudes/listar/prestamo")
-            const misSolicitudes = res.data.filter(s => s.id_usuario === finalUserId);
+            const [resSol, resUsu, resMat, resApr] = await Promise.all([
+                axiosClient.get("/solicitudes/listar/prestamo"),
+                axiosClient.get("/usuarios/listar"),
+                axiosClient.get("/materiales/listar"),
+                axiosClient.get("/aprendices/listar")
+            ]);
+            const misSolicitudes = resSol.data.filter(s => s.id_usuario === finalUserId);
             
             setSolicitudes(misSolicitudes)
+            setUsuarios(resUsu.data)
+            setMateriales(resMat.data)
+            setAprendices(resApr.data)
         } catch (error) {
             toast.error("Error cargando el historial de solicitudes")
         }
@@ -68,7 +77,7 @@ export default function HistorialSolicitudes() {
 
     const handleViewDetails = async (solicitud) => {
         setSolicitudActiva(solicitud);
-        setDetallesActivos([]); // Limpiar carga previa
+        setDetallesActivos([]);
         setShowModal(true);
 
         try {
@@ -102,6 +111,9 @@ export default function HistorialSolicitudes() {
                 onClose={() => setShowModal(false)}
                 solicitudActiva={solicitudActiva}
                 detalles={detallesActivos}
+                usuarios={usuarios}
+                materiales={materiales}
+                aprendices={aprendices}
             />
 
         </CrudLayout>

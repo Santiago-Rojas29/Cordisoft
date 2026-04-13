@@ -5,6 +5,7 @@ export default function RequestForm({
     materialesSeleccionados, 
     onCantidadChange,
     listaAprendices = [],
+    areas = [],
     onAprendizChange,
     tipoSolicitud,
     setTipoSolicitud 
@@ -45,14 +46,16 @@ export default function RequestForm({
                                 </tr>
                             </thead>
                             <tbody>
-                                {materialesSeleccionados.map((item) => (
+                                {materialesSeleccionados.map((item) => {
+                                    const area = areas.find(a => a.id_area === item.id_area);
+                                    return (
                                     <tr key={item.id_material} className="border-bottom">
-                                        <td className="text-start fw-bold">{item.nombre}</td>
-                                        <td>{item.tipo}</td>
-                                        <td>{item.cantidad_stock}</td>
-                                        <td>{item.id_area || "General"}</td>
-                                        <td>{item.ubicacion || "N/A"}</td>
-                                        <td>
+                                            <td className="text-start fw-bold">{item.nombre}</td>
+                                            <td>{item.tipo}</td>
+                                            <td>{item.cantidad_stock}</td>
+                                            <td>{area ? area.nombre : "General"}</td>
+                                            <td>{item.ubicacion || "N/A"}</td>
+                                            <td>
                                             <input 
                                                 type="number" 
                                                 className="form-control form-control-sm text-center"
@@ -63,22 +66,27 @@ export default function RequestForm({
                                             />
                                         </td>
                                         <td>
-                                            <select 
-                                                className="form-select form-select-sm"
-                                                value={item.id_aprendiz || ""}
-                                                onChange={(e) => onAprendizChange(item.id_material, e.target.value)}
-                                            >
-                                                <option value="">Seleccione...</option>
-                                                {listaAprendices.map(ap => (
-                                                    <option key={ap.id_usuario} value={ap.id_usuario}>
-                                                        {ap.nombre} {ap.apellidos}
-                                                    </option>
+                                            <div className="d-flex flex-column gap-1">
+                                                {item.aprendices?.map((apId, idx) => (
+                                                    <select 
+                                                        key={idx}
+                                                        className="form-select form-select-sm"
+                                                        value={apId || ""}
+                                                        onChange={(e) => onAprendizChange(item.id_material, idx, e.target.value)}
+                                                    >
+                                                        <option value="">Aprendiz {idx + 1}...</option>
+                                                        {listaAprendices.map(ap => (
+                                                            <option key={ap.id_aprendiz} value={ap.id_aprendiz}>
+                                                                {ap.nombre}
+                                                            </option>
+                                                        ))}
+                                                    </select>
                                                 ))}
-                                            </select>
-                                        </td>
+                                            </div>
+                                            </td>
                                     </tr>
-                                ))}
-                            </tbody>
+                                    )})}
+                                </tbody>
                         </table>
                     </div>
                 )}

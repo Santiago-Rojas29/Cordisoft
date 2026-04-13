@@ -13,22 +13,35 @@ export default function Solicitudes() {
     const [solicitudes, setSolicitudes] = useState([])
     const [busqueda, setBusqueda] = useState("")
 
+    // Listas base para cruzar Nombres en lugar de IDs
+    const [usuarios, setUsuarios] = useState([])
+    const [materiales, setMateriales] = useState([])
+    const [aprendices, setAprendices] = useState([])
+
     // Estados para el Modal de Detalles
     const [showModal, setShowModal] = useState(false)
     const [solicitudActiva, setSolicitudActiva] = useState(null)
     const [detallesActivos, setDetallesActivos] = useState([])
 
-    const obtenerSolicitudes = async () => {
+    const obtenerDatos = async () => {
         try {
-            const res = await axiosClient.get("/solicitudes/listar/prestamo")
-            setSolicitudes(res.data)
+            const [resSol, resUsu, resMat, resApr] = await Promise.all([
+                axiosClient.get("/solicitudes/listar/prestamo"),
+                axiosClient.get("/usuarios/listar"),
+                axiosClient.get("/materiales/listar"),
+                axiosClient.get("/aprendices/listar")
+            ]);
+            setSolicitudes(resSol.data)
+            setUsuarios(resUsu.data)
+            setMateriales(resMat.data)
+            setAprendices(resApr.data)
         } catch (error) {
-            toast.error("Error cargando las solicitudes")
+            toast.error("Error cargando los datos del servidor")
         }
     }
 
     useEffect(() => {
-        obtenerSolicitudes()
+        obtenerDatos()
     }, [])
 
     // Simulación de búsqueda local rápida (Opcional, si no hay backend endpoint para buscar)
@@ -56,7 +69,7 @@ export default function Solicitudes() {
             });
 
             toast.success(`Solicitud #${solicitud.id_solicitud} ha sido ${nuevoEstado}`);
-            obtenerSolicitudes(); // Recargar datos
+            obtenerDatos(); // Recargar datos
 
         } catch (error) {
             console.error("Error modificando petición:", error);
@@ -104,6 +117,7 @@ export default function Solicitudes() {
 
             <SolicitudesTable
                 lista={solicitudesFiltradas}
+                usuarios={usuarios}
                 onViewDetails={handleViewDetails}
                 onApprove={handleApprove}
                 onReject={handleReject}
@@ -114,6 +128,9 @@ export default function Solicitudes() {
                 onClose={() => setShowModal(false)}
                 solicitudActiva={solicitudActiva}
                 detalles={detallesActivos}
+                usuarios={usuarios}
+                materiales={materiales}
+                aprendices={aprendices}
             />
 
         </CrudLayout>

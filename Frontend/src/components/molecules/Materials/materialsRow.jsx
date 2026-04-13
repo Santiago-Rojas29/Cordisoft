@@ -2,9 +2,16 @@ import Button from "../../atoms/Users/actionButton"
 
 export default function UserRow({
     material,
+    areas = [],
+    bodegas = [],
+    fichas = [],
     onEdit,
     onDelete
     }){
+
+    const area = areas.find(a => a.id_area === material.id_area);
+    const bodega = bodegas.find(b => b.id_bodega === material.id_bodega);
+    const ficha = fichas.find(f => f.id_ficha === material.id_ficha);
 
     return(
 
@@ -18,10 +25,10 @@ export default function UserRow({
         </td>
         <td>{material.estado}</td>
         <td>{material.descripcion}</td>
-        <td>{material.id_area}</td>
+        <td>{area ? area.nombre : "Global"}</td>
         <td>{material.cantidad}</td>
-        <td>{material.id_bodega}</td>
-        <td>{material.id_ficha}</td>
+        <td>{bodega ? bodega.nombre : "Bodega Central"}</td>
+        <td>{ficha ? ficha.codigo : "No asig."}</td>
 
         <td className="d-flex gap-2">
 

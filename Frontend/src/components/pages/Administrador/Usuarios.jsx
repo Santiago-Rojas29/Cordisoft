@@ -9,6 +9,7 @@ import { toast } from "sonner"
 export default function Usuarios() {
 
   const [lista, setLista] = useState([])
+  const [roles, setRoles] = useState([])
   const [busqueda, setBusqueda] = useState("")
 
   const [showModal, setShowModal] = useState(false)
@@ -31,8 +32,18 @@ export default function Usuarios() {
     setLista(res.data)
   }
 
+  const obtenerRoles = async () => {
+    try {
+      const res = await axiosClient.get("/roles/listar");
+      setRoles(res.data);
+    } catch (error) {
+      toast.error("Error al cargar roles");
+    }
+  }
+
   useEffect(() => {
     obtenerUsuarios()
+    obtenerRoles()
   }, [])
 
   useEffect(() => {
@@ -161,6 +172,7 @@ export default function Usuarios() {
 
       <UsersTable
         lista={lista}
+        roles={roles}
         onDelete={eliminarUsuario}
         onEdit={editarUsuario}
       />
@@ -169,6 +181,7 @@ export default function Usuarios() {
         show={showModal}
         onClose={cerrarModal}
         form={form}
+        roles={roles}
         handleChange={handleChange}
         onSave={guardarUsuario}
       />

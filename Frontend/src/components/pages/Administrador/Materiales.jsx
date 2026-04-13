@@ -199,6 +199,9 @@ export default function Materiales() {
 
       <UsersTable
         lista={lista}
+        areas={areas}
+        bodegas={bodega}
+        fichas={ficha}
         onDelete={eliminarMaterial}
         onEdit={editarMaterial}
       />

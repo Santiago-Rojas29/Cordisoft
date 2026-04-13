@@ -4,58 +4,58 @@ export default function AreasTable({
     lista,
     onEdit,
     onDelete
-    }){
+}) {
 
-    return(
+    return (
 
         <table className="table table-bordered">
 
-        <thead>
+            <thead>
 
-            <tr>
+                <tr>
 
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Estado</th>
-            <th>Usuario</th>
-            <th>Acciones</th>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Estado</th>
+                    <th>Usuario</th>
+                    <th>Acciones</th>
 
-            </tr>
+                </tr>
 
-        </thead>
+            </thead>
 
-        <tbody>
+            <tbody>
 
-            {lista.map(area=>(
+                {lista.map(area => (
 
-            <tr key={area.id_area}>
+                    <tr key={area.id_area}>
 
-                <td>{area.id_area}</td>
-                <td>{area.nombre}</td>
-                <td>{area.estado}</td>
-                <td>{area.usuario_nombre}</td>
+                        <td>{area.id_area}</td>
+                        <td>{area.nombre}</td>
+                        <td>{area.estado}</td>
+                        <td>{area.usuario_nombre}</td>
 
-                <td>
+                        <td>
 
-                <Button
-                    label="Editar"
-                    color="warning"
-                    onClick={()=>onEdit(area)}
-                />
+                            <Button
+                                label="Editar"
+                                color="warning"
+                                onClick={() => onEdit(area)}
+                            />
 
-                <Button
-                    label="Eliminar"
-                    color="danger"
-                    onClick={()=>onDelete(area.id_area)}
-                />
+                            <Button
+                                label="Eliminar"
+                                color="danger"
+                                onClick={() => onDelete(area.id_area)}
+                            />
 
-                </td>
+                        </td>
 
-            </tr>
+                    </tr>
 
-            ))}
+                ))}
 
-        </tbody>
+            </tbody>
 
         </table>
 

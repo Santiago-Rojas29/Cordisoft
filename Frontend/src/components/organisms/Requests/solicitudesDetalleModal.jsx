@@ -2,7 +2,10 @@ export default function SolicitudesDetalleModal({
     show,
     onClose,
     detalles = [],
-    solicitudActiva
+    solicitudActiva,
+    usuarios = [],
+    materiales = [],
+    aprendices = []
 }) {
     if (!show) return null;
 
@@ -20,7 +23,7 @@ export default function SolicitudesDetalleModal({
 
                     <div className="modal-body p-4 pt-3">
                         <div className="mb-3 d-flex justify-content-between align-items-center bg-light p-3 rounded">
-                            <div><strong>Usuario:</strong> {solicitudActiva?.id_usuario}</div>
+                            <div><strong>Usuario:</strong> {usuarios.find(u => u.id_usuario === solicitudActiva?.id_usuario)?.nombre || solicitudActiva?.id_usuario}</div>
                             <div><strong>Fecha:</strong> {solicitudActiva?.fecha_creacion?.split("T")[0]}</div>
                             <div>
                                 <strong>Estado: </strong> 
@@ -40,20 +43,24 @@ export default function SolicitudesDetalleModal({
                                     <thead className="table-light text-secondary">
                                         <tr>
                                             <th>ID Detalle</th>
-                                            <th>ID Material</th>
-                                            <th>ID Aprendiz</th>
+                                            <th>Material</th>
+                                            <th>Aprendiz</th>
                                             <th>Cantidad Autorizada</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {detalles.map((detalle) => (
-                                            <tr key={detalle.id_detalle}>
-                                                <td className="fw-bold">#{detalle.id_detalle}</td>
-                                                <td>Data Material: {detalle.id_material}</td>
-                                                <td>{detalle.id_aprendiz || "N/A"}</td>
-                                                <td className="fw-bold">{detalle.cantidad}</td>
-                                            </tr>
-                                        ))}
+                                        {detalles.map((detalle) => {
+                                            const mat = materiales.find(m => m.id_material === detalle.id_material);
+                                            const apr = aprendices.find(a => a.id_aprendiz === detalle.id_aprendiz);
+                                            return (
+                                                <tr key={detalle.id_detalle}>
+                                                    <td className="fw-bold">#{detalle.id_detalle}</td>
+                                                    <td>{mat ? mat.nombre : `ID: ${detalle.id_material}`}</td>
+                                                    <td>{apr ? apr.nombre : (detalle.id_aprendiz || "N/A")}</td>
+                                                    <td className="fw-bold">{detalle.cantidad}</td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>

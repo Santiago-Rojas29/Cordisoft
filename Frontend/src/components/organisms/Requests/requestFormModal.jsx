@@ -7,7 +7,8 @@ export default function RequestFormModal({
     materialesSeleccionados = [],
     onSave,
     onCantidadChange,
-    listaAprendices = [],
+    listaAprendices,
+    areas,
     onAprendizChange,
     tipoSolicitud,
     setTipoSolicitud
@@ -29,6 +30,7 @@ export default function RequestFormModal({
                             materialesSeleccionados={materialesSeleccionados}
                             onCantidadChange={onCantidadChange}
                             listaAprendices={listaAprendices}
+                            areas={areas}
                             onAprendizChange={onAprendizChange}
                             tipoSolicitud={tipoSolicitud}
                             setTipoSolicitud={setTipoSolicitud}

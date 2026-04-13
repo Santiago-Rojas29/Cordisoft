@@ -1,18 +1,18 @@
-export const Input=({type,value,onChange,placeholder,})=> {
+export const Input = ({ type, value, onChange, placeholder, }) => {
     return (
         <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        style={styles}
-        required
+            type={type}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            style={styles}
+            required
         />
     );
 }
 
-const styles={
-    width:"100%",
+const styles = {
+    width: "100%",
     padding: "12px 10px",
     marginTop: "20px",
     marginBottom: "1rem",

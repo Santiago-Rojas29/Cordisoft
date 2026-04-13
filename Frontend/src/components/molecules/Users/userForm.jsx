@@ -3,6 +3,7 @@ import Select from "../../atoms/Users/selectItem"
 
 export default function UserForm({
     form,
+    roles = [],
     onChange
     }){
 
@@ -48,11 +49,15 @@ export default function UserForm({
             {value:"Inactivo",label:"Inactivo"}
             ]}
         />
-        <Input
-        label="ID (Rol)"
-        name="id_rol"
-        value={form.id_rol}
-        onChange={onChange}
+        <Select
+            label="Rol"
+            name="id_rol"
+            value={form.id_rol}
+            onChange={onChange}
+            options={[
+                { value: "", label: "Seleccione un rol..." },
+                ...roles.map(r => ({ value: r.id_rol, label: r.nombre }))
+            ]}
         />
 
         <Input

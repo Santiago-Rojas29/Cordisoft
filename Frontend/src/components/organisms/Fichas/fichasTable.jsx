@@ -1,62 +1,62 @@
-    import Button from "../../atoms/Users/actionButton"
+import Button from "../../atoms/Users/actionButton"
 
-    export default function FichasTable({lista,onEdit,onDelete}){
+export default function FichasTable({ lista, onEdit, onDelete }) {
 
-    return(
+    return (
 
-    <table className="table table-bordered">
+        <table className="table table-bordered">
 
-    <thead>
+            <thead>
 
-        <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Estado</th>
-        <th>Área</th>
-        <th>Usuario</th>
-        <th>Código</th>
-        <th>Acciones</th>
-        </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Estado</th>
+                    <th>Área</th>
+                    <th>Usuario</th>
+                    <th>Código</th>
+                    <th>Acciones</th>
+                </tr>
 
-    </thead>
+            </thead>
 
-    <tbody>
+            <tbody>
 
-    {lista.map(ficha=>(
+                {lista.map(ficha => (
 
-    <tr key={ficha.id_ficha}>
+                    <tr key={ficha.id_ficha}>
 
-    <td>{ficha.id_ficha}</td>
-    <td>{ficha.nombre}</td>
-    <td>{ficha.estado}</td>
-    <td>{ficha.area}</td>
-    <td>{ficha.usuario}</td>
-    <td>{ficha.codigo}</td>
+                        <td>{ficha.id_ficha}</td>
+                        <td>{ficha.nombre}</td>
+                        <td>{ficha.estado}</td>
+                        <td>{ficha.area}</td>
+                        <td>{ficha.usuario}</td>
+                        <td>{ficha.codigo}</td>
 
-    <td>
+                        <td>
 
-    <Button
-    label="Editar"
-    color="warning"
-    onClick={()=>onEdit(ficha)}
-    />
+                            <Button
+                                label="Editar"
+                                color="warning"
+                                onClick={() => onEdit(ficha)}
+                            />
 
-    <Button
-    label="Eliminar"
-    color="danger"
-    onClick={()=>onDelete(ficha.id_ficha)}
-    />
+                            <Button
+                                label="Eliminar"
+                                color="danger"
+                                onClick={() => onDelete(ficha.id_ficha)}
+                            />
 
-    </td>
+                        </td>
 
-    </tr>
+                    </tr>
 
-    ))}
+                ))}
 
-    </tbody>
+            </tbody>
 
-    </table>
+        </table>
 
     )
 
-    }
+}

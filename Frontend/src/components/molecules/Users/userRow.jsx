@@ -3,6 +3,7 @@ import StatusBadge from "../../atoms/Users/statusBadge"
 
 export default function UserRow({
     usuario,
+    roles = [],
     onEdit,
     onDelete
     }){
@@ -21,7 +22,7 @@ export default function UserRow({
             <StatusBadge estado={usuario.estado}/>
         </td>
 
-        <td>{usuario.id_rol}</td>
+        <td>{roles.find(r => r.id_rol === usuario.id_rol)?.nombre || usuario.id_rol}</td>
 
         <td className="d-flex gap-2">
 

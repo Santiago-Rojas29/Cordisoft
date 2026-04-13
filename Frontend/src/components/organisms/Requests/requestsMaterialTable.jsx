@@ -2,13 +2,16 @@ import React from 'react';
 
 export default function RequestsMaterialTable({
     lista,
+    areas = [],
+    bodegas = [],
+    fichas = [],
     onToggle,
     selectedItems = []
 }) {
     // Comprueba si un material ya está seleccionado comparando IDs
     const isSelected = (id) => selectedItems.some(item => item.id_material === id);
 
-    return(
+    return (
         <div className="table-responsive shadow-sm rounded-4 bg-white p-2">
             <table className="table table-hover align-middle mb-0 text-center">
                 <thead className="table-light text-secondary">
@@ -27,17 +30,21 @@ export default function RequestsMaterialTable({
                 <tbody className="border-top-0">
                     {lista.map((material) => {
                         const added = isSelected(material.id_material);
+                        const area = areas.find(a => a.id_area === material.id_area);
+                        const bodega = bodegas.find(b => b.id_bodega === material.id_bodega);
+                        const ficha = fichas.find(f => f.id_ficha === material.id_ficha);
+
                         return (
                             <tr key={material.id_material} className={added ? "table-success" : ""}>
                                 <td className="fw-bold text-muted">{material.codigo || "N/A"}</td>
                                 <td className="fw-bold">{material.nombre}</td>
                                 <td>{material.tipo}</td>
                                 <td>{material.cantidad}</td>
-                                <td className="text-muted">{material.id_ficha || "No aplica"}</td>
-                                <td className="text-muted">{material.id_bodega || "Bodega General"}</td>
-                                <td className="text-muted">{material.id_area || "General"}</td>
+                                <td className="text-muted">{ficha ? ficha.codigo : "No aplica"}</td>
+                                <td className="text-muted">{bodega ? bodega.nombre : "Bodega General"}</td>
+                                <td className="text-muted">{area ? area.nombre : "Global"}</td>
                                 <td>
-                                    <button 
+                                    <button
                                         className={`btn btn-sm border-0 rounded-circle ${added ? "btn-outline-danger" : "btn-outline-success"}`}
                                         onClick={() => onToggle(material)}
                                         title={added ? "Quitar de la solicitud" : "Agregar a la solicitud"}
@@ -48,7 +55,7 @@ export default function RequestsMaterialTable({
                             </tr>
                         );
                     })}
-                    
+
                     {lista.length === 0 && (
                         <tr>
                             <td colSpan="8" className="text-center py-4 text-muted">No se encontraron materiales</td>

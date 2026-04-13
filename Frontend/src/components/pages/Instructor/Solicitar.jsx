@@ -13,6 +13,9 @@ export default function Solicitar() {
 
   const [listaMateriales, setListaMateriales] = useState([])
   const [listaAprendices, setListaAprendices] = useState([])
+  const [areas, setAreas] = useState([])
+  const [bodegas, setBodegas] = useState([])
+  const [fichas, setFichas] = useState([])
   const [busqueda, setBusqueda] = useState("")
   const [materialesSeleccionados, setMaterialesSeleccionados] = useState([])
   const [showModal, setShowModal] = useState(false)
@@ -22,8 +25,14 @@ export default function Solicitar() {
     try {
         const resMat = await axiosClient.get("/materiales/listar");
         const resUsu = await axiosClient.get("/aprendices/listar");
+        const resAreas = await axiosClient.get("/areas/listar");
+        const resBodegas = await axiosClient.get("/bodegas/listar");
+        const resFichas = await axiosClient.get("/fichas/listar");
         setListaMateriales(resMat.data);
         setListaAprendices(resUsu.data);
+        setAreas(resAreas.data);
+        setBodegas(resBodegas.data);
+        setFichas(resFichas.data);
     } catch (error) { 
         toast.error("Error cargando algunos datos del servidor");
     }
@@ -59,7 +68,7 @@ export default function Solicitar() {
                   ...material, 
                   cantidad_solicitada: 1,
                   cantidad_stock: material.cantidad,
-                  id_aprendiz: ""
+                  aprendices: [""] // Default 1 empty selection
               }];
           }
       });
@@ -68,16 +77,25 @@ export default function Solicitar() {
   const handleCantidadChange = (idMaterial, nuevaCantidad) => {
       setMaterialesSeleccionados(prev => prev.map(item => {
           if(item.id_material === idMaterial) {
-              return { ...item, cantidad_solicitada: nuevaCantidad }
+              const currentAprendices = [...(item.aprendices || [])];
+              if (nuevaCantidad > currentAprendices.length) {
+                  const dif = nuevaCantidad - currentAprendices.length;
+                  for (let i = 0; i < dif; i++) currentAprendices.push("");
+              } else if (nuevaCantidad < currentAprendices.length) {
+                  currentAprendices.splice(nuevaCantidad);
+              }
+              return { ...item, cantidad_solicitada: nuevaCantidad, aprendices: currentAprendices }
           }
           return item;
       }));
   }
 
-  const handleAprendizChange = (idMaterial, idAprendiz) => {
+  const handleAprendizChange = (idMaterial, indexSlot, idAprendiz) => {
       setMaterialesSeleccionados(prev => prev.map(item => {
           if(item.id_material === idMaterial) {
-              return { ...item, id_aprendiz: idAprendiz }
+              const updated = [...item.aprendices];
+              updated[indexSlot] = idAprendiz;
+              return { ...item, aprendices: updated }
           }
           return item;
       }));
@@ -91,9 +109,9 @@ export default function Solicitar() {
         return;
     }
 
-    const faltaAprendiz = materialesSeleccionados.some(item => !item.id_aprendiz);
+    const faltaAprendiz = materialesSeleccionados.some(item => item.aprendices.some(ap => !ap));
     if (faltaAprendiz) {
-        toast.error("Debe asignar un aprendiz a cada material.");
+        toast.error("Debe asignar un aprendiz por cada unidad de material seleccionada.");
         return;
     }
 
@@ -118,12 +136,15 @@ export default function Solicitar() {
 
         const id_solicitud = resSolicitud.data?.insertId || resSolicitud.data?.id_solicitud || resSolicitud.data || 1; 
 
-        const promesasDetalles = materialesSeleccionados.map(material => {
-            return axiosClient.post("/detalleSolicitudes/crear", {
-                id_solicitud: id_solicitud,
-                id_material: Number(material.id_material),
-                cantidad: Number(material.cantidad_solicitada),
-                id_aprendiz: Number(material.id_aprendiz)
+        const promesasDetalles = [];
+        materialesSeleccionados.forEach(material => {
+            material.aprendices.forEach(idAprendiz => {
+                promesasDetalles.push(axiosClient.post("/detalleSolicitudes/crear", {
+                    id_solicitud: id_solicitud,
+                    id_material: Number(material.id_material),
+                    cantidad: 1, // Individual assignment
+                    id_aprendiz: Number(idAprendiz)
+                }));
             });
         });
 
@@ -166,6 +187,9 @@ export default function Solicitar() {
 
       <RequestsMaterialTable
         lista={listaMateriales}
+        areas={areas}
+        bodegas={bodegas}
+        fichas={fichas}
         onToggle={handleToggleMaterial}
         selectedItems={materialesSeleccionados}
       />
@@ -177,6 +201,7 @@ export default function Solicitar() {
         onSave={guardarSolicitud}
         onCantidadChange={handleCantidadChange}
         listaAprendices={listaAprendices}
+        areas={areas}
         onAprendizChange={handleAprendizChange}
         tipoSolicitud={tipoSolicitud}
         setTipoSolicitud={setTipoSolicitud}

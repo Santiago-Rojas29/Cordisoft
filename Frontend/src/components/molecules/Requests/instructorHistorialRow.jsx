@@ -8,7 +8,7 @@ export default function InstructorHistorialRow({
 }) {
     const tipo = String(solicitud.tipo_solicitud).toLowerCase();
     const isLoan = tipo === "prestamo" || tipo === "préstamo";
-    const estadoPrestamo = solicitud.estado_prestamo || "activo"; // Fallback para préstamos antiguos sin registro en tabla
+    const estadoPrestamo = solicitud.estado_prestamo || "pendiente"; // Fallback para seguridad
     const canReturn = isLoan && estadoPrestamo === "activo";
     const isReturned = isLoan && estadoPrestamo === "devuelto";
 
@@ -22,7 +22,7 @@ export default function InstructorHistorialRow({
             </td>
             <td>
                 {isLoan ? (
-                    <span className={`badge ${canReturn ? "bg-warning" : "bg-info"}`}>
+                    <span className={`badge ${estadoPrestamo === 'activo' ? 'bg-warning' : estadoPrestamo === 'devuelto' ? 'bg-info' : 'bg-secondary'}`}>
                         {estadoPrestamo}
                     </span>
                 ) : (
@@ -31,17 +31,17 @@ export default function InstructorHistorialRow({
             </td>
             <td>
                 <div className="d-flex justify-content-center gap-2">
-                    <ActionButton 
-                        label="Detalles" 
-                        color="primary" 
-                        onClick={() => onViewDetails(solicitud)} 
+                    <ActionButton
+                        label="Detalles"
+                        color="primary"
+                        onClick={() => onViewDetails(solicitud)}
                     />
-                    
+
                     {canReturn && (
-                        <ActionButton 
-                            label="Devolver" 
-                            color="warning" 
-                            onClick={() => onReturn(solicitud)} 
+                        <ActionButton
+                            label="Devolver"
+                            color="warning"
+                            onClick={() => onReturn(solicitud)}
                         />
                     )}
                 </div>

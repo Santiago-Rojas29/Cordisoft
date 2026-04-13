@@ -1,5 +1,5 @@
-export const ButtonSave=()=>{
-    return(
+export const ButtonSave = () => {
+    return (
         <button type="submit" className="login-button" style={styles}>
             Ingresar
         </button>
