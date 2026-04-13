@@ -44,6 +44,8 @@ servidor.use('/detalleSolicitudes',rutasDetalleSolicitud)
 import routeAuth from './routes/routerLogin.js';
 servidor.use("/login",routeAuth)
 
+import rutasEstadisticas from './routes/routerEstadisticas.js';
+servidor.use("/estadisticas",rutasEstadisticas)
 
 
 
