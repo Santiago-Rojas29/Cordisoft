@@ -53,7 +53,7 @@ export const devolverPrestamo = async (req, resp) => {
     const {id_solicitud} = req.body
     const sql = `UPDATE prestamo SET estado_prestamo = 'devuelto', fecha_fin = NOW() WHERE  id_solicitud = ?`
     await conexionDb.query(sql,[id_solicitud])
-    const sqlDetalle = `UPDATE detallesolicitud SET estado_item = 'devuelto' WHERE id_solicitud = ?`
+    const sqlDetalle = `UPDATE detallesolicitud SET estado_item = 'devuelto' WHERE id_solicitud = ? AND estado_item != 'dañado'`
     await conexionDb.query(sqlDetalle,[id_solicitud])
     resp.status(200).json({mensaje: "Prestamo devuelto correctamente"})
 }

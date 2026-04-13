@@ -15,9 +15,9 @@ export const listarDetalleSolicitud = async (req, resp) => {
 
 export const editarDetalleSolicitud = async (req, resp) => {
     const { id } = req.params
-    const { id_solicitud, id_material, cantidad, id_aprendiz } = req.body
-    const sql = "update detallesolicitud set id_solicitud=?, id_material=?, cantidad=?, id_aprendiz=? where id_detalle=?"
-    const [resultado] = await conexionDb.query(sql, [id_solicitud, id_material, cantidad, id_aprendiz, id])
+    const { estado_item } = req.body
+    const sql = "update detallesolicitud set estado_item = ? where id_detalle = ? "
+    const [resultado] = await conexionDb.query(sql, [estado_item, id])
     resp.status(200).json(resultado)
 }
 

@@ -19,6 +19,8 @@ export const DefaultingUsersChart = () => {
       try {
         const response = await axios.get(STATS_ENDPOINTS.defaultingUsers);
         setData(response.data || []);
+        console.log(response.data)
+
       } catch (err) {
         setError('No se pudieron cargar los datos');
       } finally {

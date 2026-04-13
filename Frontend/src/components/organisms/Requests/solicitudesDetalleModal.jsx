@@ -1,3 +1,5 @@
+import axiosClient from "../../../Api/axiosClient";
+
 export default function SolicitudesDetalleModal({
     show,
     onClose,
@@ -8,6 +10,18 @@ export default function SolicitudesDetalleModal({
     aprendices = []
 }) {
     if (!show) return null;
+
+    const cambiarEstado = async (id_detalle, estado) => {
+        try {
+            await axiosClient.put(`/detalleSolicitudes/editar/${id_detalle}`, {
+                estado_item: estado
+            });
+            console.log("Estado Actualizado")
+        } catch (error) {
+            console.error("Error al actualizar estado:", error)
+        }
+    }
+    const canEdit = solicitudActiva?.estado_prestamo === 'devuelto';
 
     return (
         <div className="modal show d-block bg-dark bg-opacity-50" tabIndex="-1">
@@ -45,6 +59,7 @@ export default function SolicitudesDetalleModal({
                                             <th>ID Detalle</th>
                                             <th>Material</th>
                                             <th>Aprendiz</th>
+                                            <th>Estado</th>
                                             <th>Cantidad Autorizada</th>
                                         </tr>
                                     </thead>
@@ -57,6 +72,23 @@ export default function SolicitudesDetalleModal({
                                                     <td className="fw-bold">#{detalle.id_detalle}</td>
                                                     <td>{mat ? mat.nombre : `ID: ${detalle.id_material}`}</td>
                                                     <td>{apr ? apr.nombre : (detalle.id_aprendiz || "N/A")}</td>
+                                                    <td>
+                                                        {canEdit ? (
+                                                            <select className="form-select form-select-sm" value={detalle.estado_item || "pendiente"} onChange={(e) => cambiarEstado(detalle.id_detalle, e.target.value)}>
+                                                            <option value="pendiente">Pendiente</option>
+                                                            <option value="entregado">Entregado</option>
+                                                            <option value="devuelto">Devuelto</option>
+                                                            <option value="dañado">Dañado</option>
+                                                        </select>
+                                                        ): (
+                                                            <span className="badge bg-secondary">
+                                                                {detalle.estado_item || 'Pendiente'}
+                                                            </span>
+                                                        )
+                                                    }
+                                                        
+
+                                                    </td>
                                                     <td className="fw-bold">{detalle.cantidad}</td>
                                                 </tr>
                                             );

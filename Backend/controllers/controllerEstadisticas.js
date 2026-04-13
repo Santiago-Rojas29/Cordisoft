@@ -16,14 +16,21 @@ export const materialesNoDevueltos = async (req, resp) => {
 
 export const materialesMasDaniados = async (req, resp) => {
     const sql = `
-        SELECT m.nombre as name, COUNT(*) as valor
+        SELECT 
+            m.nombre as name, 
+            SUM(ds.cantidad) as valor
         FROM detallesolicitud ds
+        JOIN solicitud s ON ds.id_solicitud = s.id_solicitud
+        JOIN prestamo p ON p.id_solicitud = s.id_solicitud
         JOIN material m ON ds.id_material = m.id_material
         WHERE ds.estado_item = 'dañado'
+        AND p.estado_prestamo = 'devuelto'
+        AND s.tipo_solicitud = 'prestamo'
         GROUP BY m.id_material, m.nombre
         ORDER BY valor DESC
         LIMIT 10
     `
+
     const [resultado] = await conexionDb.query(sql)
     resp.status(200).json(resultado)
 }
