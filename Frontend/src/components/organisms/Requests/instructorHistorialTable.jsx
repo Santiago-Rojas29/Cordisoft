@@ -1,10 +1,10 @@
-import SolicitudesRow from "../../molecules/Requests/solicitudesRow"
+import React from 'react';
+import InstructorHistorialRow from "../../molecules/Requests/instructorHistorialRow"
 
-export default function SolicitudesTable({
+export default function InstructorHistorialTable({
     lista,
     onViewDetails,
-    onApprove,
-    onReject
+    onReturn
 }) {
     return(
         <div className="table-responsive shadow-sm rounded-4 bg-white p-2">
@@ -13,11 +13,9 @@ export default function SolicitudesTable({
                 <thead className="table-light text-secondary">
                     <tr>
                         <th>ID Solicitud</th>
-                        <th>ID Usuario</th>
                         <th>Tipo</th>
                         <th>Fecha Creación</th>
-                        <th>Fecha Entrega</th>
-                        <th>Estado Global</th>
+                        <th>Estado Solicitud</th>
                         <th>Estado Préstamo</th>
                         <th>Acciones</th>
                     </tr>
@@ -26,19 +24,18 @@ export default function SolicitudesTable({
                 <tbody className="border-top-0">
 
                     {lista.map((solicitud) => (
-                        <SolicitudesRow
+                        <InstructorHistorialRow
                             key={solicitud.id_solicitud}
                             solicitud={solicitud}
                             onViewDetails={onViewDetails}
-                            onApprove={onApprove}
-                            onReject={onReject}
+                            onReturn={onReturn}
                         />
                     ))}
 
                     {lista.length === 0 && (
                         <tr>
-                            <td colSpan="7" className="text-center py-4 text-muted">
-                                No hay solicitudes registradas
+                            <td colSpan="6" className="text-center py-4 text-muted">
+                                No tienes solicitudes ni préstamos registrados
                             </td>
                         </tr>
                     )}

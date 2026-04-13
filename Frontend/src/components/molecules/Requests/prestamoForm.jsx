@@ -1,32 +1,22 @@
 import SearchableSelect from '../Shared/searchableSelect';
-import Input from '../../atoms/Users/formInput';
 
-export default function RequestForm({ 
-    materialesSeleccionados, 
-    onCantidadChange,
-    listaAprendices = [],
-    onAprendizChange,
-    tipoSolicitud,
-    setTipoSolicitud 
-}) {
+export default function PrestamoForm({ form, onChange, materialesSeleccionados, fichas, aprendices, onCantidadChange }) {
+
+    const opcionesFichas = fichas.map(ficha => ({
+        value: ficha.id_ficha,
+        label: `${ficha.codigo} - ${ficha.nombre}`
+    }));
+
+    const opcionesAprendices = aprendices.map(apr => ({
+        value: apr.id_aprendiz,
+        label: `${apr.documento} - ${apr.nombre} - Ficha ${apr.id_ficha}`
+    }));
 
     return (
         <div className="text-start">
 
             <div className="mb-4">
-                <label className="form-label fw-bold">Tipo de Solicitud</label>
-                <select 
-                    className="form-select w-50"
-                    value={tipoSolicitud}
-                    onChange={(e) => setTipoSolicitud(e.target.value)}
-                >
-                    <option value="solicitud">Solicitud Normal</option>
-                    <option value="prestamo">Préstamo</option>
-                </select>
-            </div>
-
-            <div className="mb-4">
-                <label className="form-label fw-bold">Materiales Elegidos</label>
+                <label className="form-label fw-bold">Materiales Elegidos para Préstamo</label>
                 
                 {materialesSeleccionados.length === 0 ? (
                     <div className="alert alert-warning py-2 mb-0">No has seleccionado ningún material.</div>
@@ -40,8 +30,7 @@ export default function RequestForm({
                                     <th>Stock</th>
                                     <th>Área</th>
                                     <th>Ubicación</th>
-                                    <th style={{ width: "100px" }}>Cantidad</th>
-                                    <th style={{ width: "180px" }}>Aprendiz</th>
+                                    <th style={{ width: "120px" }}>Cantidad</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,20 +51,6 @@ export default function RequestForm({
                                                 onChange={(e) => onCantidadChange(item.id_material, parseInt(e.target.value) || 1)}
                                             />
                                         </td>
-                                        <td>
-                                            <select 
-                                                className="form-select form-select-sm"
-                                                value={item.id_aprendiz || ""}
-                                                onChange={(e) => onAprendizChange(item.id_material, e.target.value)}
-                                            >
-                                                <option value="">Seleccione...</option>
-                                                {listaAprendices.map(ap => (
-                                                    <option key={ap.id_usuario} value={ap.id_usuario}>
-                                                        {ap.nombre} {ap.apellidos}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -84,7 +59,31 @@ export default function RequestForm({
                 )}
             </div>
 
+            <div className="row g-4 mt-2">
+                
+                <div className="col-md-12">
+                    <label className="form-label fw-bold text-primary">Elija el ID de ficha *</label>
+                    <SearchableSelect 
+                        name="id_ficha"
+                        options={opcionesFichas}
+                        value={form.id_ficha}
+                        onChange={onChange}
+                        placeholder="Buscar ID de ficha o nombre..."
+                    />
+                </div>
 
+                <div className="col-md-12">
+                    <label className="form-label fw-bold text-primary">Elija el aprendiz responsable *</label>
+                    <SearchableSelect 
+                        name="id_aprendiz"
+                        options={opcionesAprendices}
+                        value={form.id_aprendiz}
+                        onChange={onChange}
+                        placeholder="Buscar por identificación o nombre..."
+                    />
+                </div>
+                
+            </div>
             
         </div>
     );

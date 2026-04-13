@@ -73,7 +73,7 @@ export default function InstructorSidebar({ collapsed, toggleSidebar }) {
         <SidebarItem
           to="/instructor/solicitar"
           icon={faBoxOpen}
-          label="Solicitar"
+          label="Nueva Solicitud"
           active={isActive("/instructor/solicitar")}
           collapsed={collapsed}
         />
@@ -81,18 +81,12 @@ export default function InstructorSidebar({ collapsed, toggleSidebar }) {
         <SidebarItem
           to="/instructor/historial-solicitudes"
           icon={faClipboardList}
-          label="Historial de solicitudes"
+          label="Historial Solicitudes"
           active={isActive("/instructor/historial-solicitudes")}
           collapsed={collapsed}
         />
 
-        <SidebarItem
-          to="/instructor/materiales-asignados"
-          icon={faCheckCircle}
-          label="Materiales asignados"
-          active={isActive("/instructor/materiales-asignados")}
-          collapsed={collapsed}
-        />
+
 
       </div>
 

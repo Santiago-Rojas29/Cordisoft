@@ -3,8 +3,15 @@ import { conexionDb } from "../conexionDb/conexionDb.js";
 export const crearSolicitud = async (req, resp) => {
     const { id_usuario, tipo_solicitud, fecha_creacion, fecha_entrega, estado } = req.body
     const sql = "insert into solicitud (id_usuario, tipo_solicitud, fecha_creacion, fecha_entrega, estado) values(?,?,?,?,?)"
-    const [resultado] = await conexionDb.query(sql, [id_usuario, tipo_solicitud, fecha_creacion, fecha_entrega, estado])
-    resp.status(200).json(resultado)
+    const [resultado] = await conexionDb.query(sql, [id_usuario, tipo_solicitud, fecha_creacion, fecha_entrega, estado || 'pendiente'])
+    const idSolicitud = resultado.insertId
+    if (tipo_solicitud === 'prestamo') {
+        const sqlPrestamo = `INSERT INTO prestamo (id_solicitud, fecha_inicio, estado_prestamo) VALUES (?,?,?)`
+        await conexionDb.query(sqlPrestamo, [
+            idSolicitud, fecha_creacion, 'activo'
+        ])
+    }
+    resp.status(200).json({resultado, id_solicitud: idSolicitud})
 }
 
 export const listarSolicitud = async (req, resp) => {
@@ -32,5 +39,20 @@ export const buscarSolicitud = async (req, resp) => {
     const { id } = req.params
     const sql = "select * from solicitud where id_solicitud=?"
     const [resultado] = await conexionDb.query(sql, [id])
+    resp.status(200).json(resultado)
+}
+
+export const devolverPrestamo = async (req, resp) => {
+    const {id_solicitud} = req.body
+    const sql = `UPDATE prestamo SET estado_prestamo = 'devuelto', fecha_fin = NOW() WHERE  id_solicitud = ?`
+    await conexionDb.query(sql,[id_solicitud])
+    const sqlDetalle = `UPDATE detallesolicitud SET estado_item = 'devuelto' WHERE id_solicitud = ?`
+    await conexionDb.query(sqlDetalle,[id_solicitud])
+    resp.status(200).json({mensaje: "Prestamo devuelto correctamente"})
+}
+
+export const listarSolcitudConPrestamo = async (req, resp) => {
+    const sql = `SELECT s.*, p.estado_prestamo, p.fecha_inicio, p.fecha_fin FROM solicitud s LEFT JOIN prestamo p ON s.id_solicitud = p.id_solicitud`
+    const [resultado] = await conexionDb.query(sql)
     resp.status(200).json(resultado)
 }

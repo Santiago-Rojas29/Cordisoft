@@ -5,12 +5,12 @@ export default function RequestFormModal({
     show,
     onClose,
     materialesSeleccionados = [],
-    fichas = [],
-    aprendices = [],
     onSave,
-    form,
-    onChange,
-    onCantidadChange
+    onCantidadChange,
+    listaAprendices = [],
+    onAprendizChange,
+    tipoSolicitud,
+    setTipoSolicitud
 }) {
     if (!show) return null;
 
@@ -26,12 +26,12 @@ export default function RequestFormModal({
 
                     <div className="modal-body px-4 pb-4 pt-0">
                         <RequestForm 
-                            form={form}
-                            onChange={onChange}
                             materialesSeleccionados={materialesSeleccionados}
-                            fichas={fichas}
-                            aprendices={aprendices}
                             onCantidadChange={onCantidadChange}
+                            listaAprendices={listaAprendices}
+                            onAprendizChange={onAprendizChange}
+                            tipoSolicitud={tipoSolicitud}
+                            setTipoSolicitud={setTipoSolicitud}
                         />
                     </div>
                     

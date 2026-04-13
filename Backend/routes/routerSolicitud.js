@@ -18,5 +18,11 @@ rutasSolicitudes.delete('/eliminar/:id',validarToken,eliminarSolicitud)
 import { buscarSolicitud } from '../controllers/controllerSolicitud.js'
 rutasSolicitudes.get('/buscar/:id',validarToken,buscarSolicitud)
 
+import { devolverPrestamo } from '../controllers/controllerSolicitud.js'
+rutasSolicitudes.post('/prestamo/devolver', devolverPrestamo)
+
+import { listarSolcitudConPrestamo } from '../controllers/controllerSolicitud.js'
+rutasSolicitudes.get('/listar/prestamo', listarSolcitudConPrestamo)
+
 
 export default rutasSolicitudes

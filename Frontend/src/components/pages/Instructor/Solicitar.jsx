@@ -13,29 +13,18 @@ export default function Solicitar() {
 
   const [listaMateriales, setListaMateriales] = useState([])
   const [listaAprendices, setListaAprendices] = useState([])
-  const [listaFichas, setListaFichas] = useState([])
   const [busqueda, setBusqueda] = useState("")
-
   const [materialesSeleccionados, setMaterialesSeleccionados] = useState([])
-
   const [showModal, setShowModal] = useState(false)
-
-  const [form, setForm] = useState({
-      id_ficha: "",
-      id_aprendiz: ""
-  });
+  const [tipoSolicitud, setTipoSolicitud] = useState("solicitud")
 
   const obtenerDatos = async () => {
     try {
-        const [resMat, resApr, resFichas] = await Promise.all([
-            axiosClient.get("/materiales/listar"),
-            axiosClient.get("/aprendiz/listar").catch(() => axiosClient.get("/aprendices/listar")), 
-            axiosClient.get("/ficha/listar").catch(() => axiosClient.get("/fichas/listar"))
-        ]);
-        setListaMateriales(resMat.data)
-        setListaAprendices(resApr.data)
-        setListaFichas(resFichas.data)
-    } catch (error) {
+        const resMat = await axiosClient.get("/materiales/listar");
+        const resUsu = await axiosClient.get("/aprendices/listar");
+        setListaMateriales(resMat.data);
+        setListaAprendices(resUsu.data);
+    } catch (error) { 
         toast.error("Error cargando algunos datos del servidor");
     }
   }
@@ -69,7 +58,8 @@ export default function Solicitar() {
               return [...prev, { 
                   ...material, 
                   cantidad_solicitada: 1,
-                  cantidad_stock: material.cantidad 
+                  cantidad_stock: material.cantidad,
+                  id_aprendiz: ""
               }];
           }
       });
@@ -84,12 +74,13 @@ export default function Solicitar() {
       }));
   }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({
-        ...prev,
-        [name]: value
-    }));
+  const handleAprendizChange = (idMaterial, idAprendiz) => {
+      setMaterialesSeleccionados(prev => prev.map(item => {
+          if(item.id_material === idMaterial) {
+              return { ...item, id_aprendiz: idAprendiz }
+          }
+          return item;
+      }));
   }
 
   const guardarSolicitud = async (e) => {
@@ -99,8 +90,10 @@ export default function Solicitar() {
         toast.error("Agrega al menos un material a la solicitud.");
         return;
     }
-    if (!form.id_aprendiz) { 
-        toast.error("Por favor selecciona un aprendiz.");
+
+    const faltaAprendiz = materialesSeleccionados.some(item => !item.id_aprendiz);
+    if (faltaAprendiz) {
+        toast.error("Debe asignar un aprendiz a cada material.");
         return;
     }
 
@@ -117,7 +110,7 @@ export default function Solicitar() {
 
         const resSolicitud = await axiosClient.post("/solicitudes/crear", {
             id_usuario: finalUserId,
-            tipo_solicitud: "Prestamo",
+            tipo_solicitud: tipoSolicitud,
             fecha_creacion: new Date().toISOString().split('T')[0],
             fecha_entrega: null,
             estado: "Pendiente"
@@ -130,7 +123,7 @@ export default function Solicitar() {
                 id_solicitud: id_solicitud,
                 id_material: Number(material.id_material),
                 cantidad: Number(material.cantidad_solicitada),
-                id_aprendiz: Number(form.id_aprendiz)
+                id_aprendiz: Number(material.id_aprendiz)
             });
         });
 
@@ -156,11 +149,11 @@ export default function Solicitar() {
 
   return (
     <CrudLayout
-      title="Materiales"
+      title="Materiales para Solicitud"
       headerAction={
           <RequestButton 
              onClick={abrirModal} 
-             label={`Detalle de solicitud ${materialesSeleccionados.length > 0 ? `(${materialesSeleccionados.length})` : ""}`} 
+             label={`Nueva Solicitud ${materialesSeleccionados.length > 0 ? `(${materialesSeleccionados.length})` : ""}`} 
           />
       }
     >
@@ -181,12 +174,12 @@ export default function Solicitar() {
         show={showModal}
         onClose={cerrarModal}
         materialesSeleccionados={materialesSeleccionados}
-        fichas={listaFichas}
-        aprendices={listaAprendices}
         onSave={guardarSolicitud}
-        form={form}
-        onChange={handleChange}
         onCantidadChange={handleCantidadChange}
+        listaAprendices={listaAprendices}
+        onAprendizChange={handleAprendizChange}
+        tipoSolicitud={tipoSolicitud}
+        setTipoSolicitud={setTipoSolicitud}
       />
 
     </CrudLayout>
