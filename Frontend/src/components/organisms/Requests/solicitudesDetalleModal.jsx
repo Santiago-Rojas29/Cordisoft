@@ -1,4 +1,6 @@
+import { useState } from "react";
 import axiosClient from "../../../Api/axiosClient";
+import PaginationControl from "../../molecules/Shared/PaginationControl"
 
 export default function SolicitudesDetalleModal({
     show,
@@ -12,6 +14,12 @@ export default function SolicitudesDetalleModal({
     usuarioLogueado
 }) {
     if (!show) return null;
+    
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    const totalPages = Math.max(1, Math.ceil(detalles.length / itemsPerPage));
+    const safePage = Math.min(currentPage, totalPages);
+    const paginatedList = detalles.slice((safePage - 1) * itemsPerPage, safePage * itemsPerPage);
 
     const cambiarEstado = async (id_detalle, estado) => {
         try {
@@ -80,8 +88,8 @@ export default function SolicitudesDetalleModal({
                         {detalles.length === 0 ? (
                             <div className="alert alert-info py-2">Cargando detalles o sin materiales...</div>
                         ) : (
-                            <div className="table-responsive border rounded">
-                                <table className="table table-sm table-striped align-middle text-center mb-0">
+                            <div className="table-responsive shadow-sm rounded-4 bg-white p-2">
+                                <table className="table table-hover align-middle text-center mb-0">
                                     <thead className="table-light text-secondary">
                                         <tr>
                                             <th>ID Detalle</th>
@@ -92,7 +100,7 @@ export default function SolicitudesDetalleModal({
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {detalles.map((detalle) => {
+                                        {paginatedList.map((detalle) => {
                                             const mat = materiales.find(m => m.id_material === detalle.id_material);
                                             const apr = aprendices.find(a => a.id_aprendiz === detalle.id_aprendiz);
                                             return (
@@ -123,6 +131,14 @@ export default function SolicitudesDetalleModal({
                                         })}
                                     </tbody>
                                 </table>
+                                
+                                {totalPages > 1 && (
+                                    <PaginationControl 
+                                        currentPage={safePage}
+                                        totalPages={totalPages}
+                                        onPageChange={setCurrentPage}
+                                    />
+                                )}
                             </div>
                         )}
                     </div>

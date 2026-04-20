@@ -1,4 +1,6 @@
+import { useState } from "react";
 import UserRow from "../../molecules/Users/userRow"
+import PaginationControl from "../../molecules/Shared/PaginationControl"
 
 export default function UsersTable({
     lista,
@@ -6,6 +8,12 @@ export default function UsersTable({
     onEdit,
     onDelete
 }) {
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    
+    const totalPages = Math.max(1, Math.ceil(lista.length / itemsPerPage));
+    const safePage = Math.min(currentPage, totalPages);
+    const paginatedList = lista.slice((safePage - 1) * itemsPerPage, safePage * itemsPerPage);
 
     return (
         <div className="table-responsive shadow-sm rounded-4 bg-white p-2">
@@ -30,7 +38,7 @@ export default function UsersTable({
 
                 <tbody className="border-top-0">
 
-                    {lista.map((usuario) => (
+                    {paginatedList.map((usuario) => (
                         <UserRow
                             key={usuario.id_usuario}
                             usuario={usuario}
@@ -43,6 +51,14 @@ export default function UsersTable({
                 </tbody>
 
             </table>
+            
+            {totalPages > 1 && (
+                <PaginationControl 
+                    currentPage={safePage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            )}
         </div>
 
     )

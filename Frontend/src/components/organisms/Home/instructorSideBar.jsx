@@ -13,7 +13,8 @@ import {
   faBell,
   faBoxOpen,
   faClipboardList,
-  faCheckCircle
+  faCheckCircle,
+  faHome
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function InstructorSidebar({ collapsed, toggleSidebar }) {
@@ -26,11 +27,10 @@ export default function InstructorSidebar({ collapsed, toggleSidebar }) {
   return (
 
     <div
-      className="d-flex flex-column vh-100 border-end"
+      className="d-flex flex-column vh-100 border-end sidebar-container"
       style={{
-        width: collapsed ? "70px" : "230px",
-        transition: "width 0.3s",
-        background: "#f8f9fa"
+        width: collapsed ? "70px" : "250px",
+        transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
       }}
     >
 
@@ -59,6 +59,14 @@ export default function InstructorSidebar({ collapsed, toggleSidebar }) {
           icon={faUsers}
           label="Usuario"
           active={isActive("/instructor/usuario")}
+          collapsed={collapsed}
+        />
+
+        <SidebarItem
+          to="/instructor/dashboard"
+          icon={faHome}
+          label="Dashboard"
+          active={isActive("/instructor/dashboard")}
           collapsed={collapsed}
         />
 

@@ -13,9 +13,9 @@ export default function SidebarItem({
 
         <NavLink
         to={to}
-        className={`nav-link d-flex align-items-center rounded ${
+        className={`nav-link d-flex align-items-center rounded mb-1 sidebar-item-link ${
             active
-            ? "bg-success bg-opacity-25 text-success fw-semibold"
+            ? "bg-primary bg-opacity-10 text-primary fw-semibold"
             : "text-secondary"
         }`}
         style={{

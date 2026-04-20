@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PaginationControl from "../../molecules/Shared/PaginationControl"
 
 export default function RequestsMaterialTable({
     lista,
@@ -8,8 +9,15 @@ export default function RequestsMaterialTable({
     onToggle,
     selectedItems = []
 }) {
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    
     // Comprueba si un material ya está seleccionado comparando IDs
     const isSelected = (id) => selectedItems.some(item => item.id_material === id);
+    
+    const totalPages = Math.max(1, Math.ceil(lista.length / itemsPerPage));
+    const safePage = Math.min(currentPage, totalPages);
+    const paginatedList = lista.slice((safePage - 1) * itemsPerPage, safePage * itemsPerPage);
 
     return (
         <div className="table-responsive shadow-sm rounded-4 bg-white p-2">
@@ -28,7 +36,7 @@ export default function RequestsMaterialTable({
                 </thead>
 
                 <tbody className="border-top-0">
-                    {lista.map((material) => {
+                    {paginatedList.map((material) => {
                         const added = isSelected(material.id_material);
                         const area = areas.find(a => a.id_area === material.id_area);
                         const bodega = bodegas.find(b => b.id_bodega === material.id_bodega);
@@ -63,6 +71,14 @@ export default function RequestsMaterialTable({
                     )}
                 </tbody>
             </table>
+            
+            {totalPages > 1 && (
+                <PaginationControl 
+                    currentPage={safePage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            )}
         </div>
     );
 }

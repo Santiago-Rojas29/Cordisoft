@@ -21,7 +21,7 @@ export default function InstructorLayout() {
         />
 
         <main
-            className="flex-grow-1 p-4"
+            className="flex-grow-1 p-4 main-content-wrapper"
             style={{
             transition: "margin-left 0.3s"
             }}

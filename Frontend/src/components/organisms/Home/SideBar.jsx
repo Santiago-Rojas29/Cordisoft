@@ -15,7 +15,9 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
     faBoxOpen,
     faClipboardList,
     faCheckCircle,
-    faRobot
+    faRobot,
+    faHome,
+    faShop
     } from "@fortawesome/free-solid-svg-icons";
 
     export default function Sidebar({ collapsed, toggleSidebar }) {
@@ -28,11 +30,10 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
     return (
 
         <div
-        className="d-flex flex-column vh-100 border-end"
+        className="d-flex flex-column vh-100 border-end sidebar-container"
         style={{
-            width: collapsed ? "70px" : "230px",
-            transition: "width 0.3s",
-            background: "#f8f9fa"
+            width: collapsed ? "70px" : "250px",
+            transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
         }}
         >
 
@@ -60,7 +61,7 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
 
             <SidebarItem
             to="/administrador/dashboard"
-            icon={faBoxOpen}
+            icon={faHome}
             label="Dashboard"
             active={isActive("/administrador/dashboard")}
             collapsed={collapsed}
@@ -68,7 +69,7 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
 
             <SidebarItem
             to="/administrador/bodegas"
-            icon={faBoxOpen}
+            icon={faShop}
             label="Bodegas"
             active={isActive("/administrador/bodegas")}
             collapsed={collapsed}

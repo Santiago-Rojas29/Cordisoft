@@ -63,6 +63,7 @@ function App() {
           }
         >
           <Route index element={<Instructor />} />
+          <Route path="dashboard" index element={<Dashboard />} />
           <Route path="usuario" element={<Instructor />} />
           <Route path="notificaciones" element={<Instructor />} />
           <Route path="solicitar" element={<Solicitar />} />

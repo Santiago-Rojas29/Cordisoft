@@ -18,7 +18,7 @@ export default function FormInput({
         <input
             type={type}
             name={name}
-            className="form-control form-label fw-semibold text-secondary"
+            className="form-control fw-medium text-secondary"
             value={value}
             style={{ height: "auto", marginBottom: "0.25rem", ...style }}
             onChange={onChange}
