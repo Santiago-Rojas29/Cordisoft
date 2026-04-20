@@ -8,7 +8,7 @@ export default function InstructorHistorialRow({
 }) {
     const tipo = String(solicitud.tipo_solicitud).toLowerCase();
     const isLoan = tipo === "prestamo" || tipo === "préstamo";
-    const estadoPrestamo = solicitud.estado_prestamo || "pendiente"; // Fallback para seguridad
+    const estadoPrestamo = solicitud.estado_prestamo || "pendiente"; 
     const canReturn = isLoan && estadoPrestamo === "activo";
     const isReturned = isLoan && estadoPrestamo === "devuelto";
 

@@ -72,7 +72,6 @@ export default function Pdf({ sections = [] }) {
     <Document>
       <Page size="A4" style={styles.page}>
 
-        {/* HEADER */}
         <View style={styles.header}>
           <Image src="/logo.jpg" style={styles.logo} />
           <View style={styles.headerText}>
@@ -82,19 +81,16 @@ export default function Pdf({ sections = [] }) {
           </View>
         </View>
 
-        {/* TÍTULO */}
         <Text style={styles.title}>
           Reporte General del Dashboard
         </Text>
 
-        {/* DESCRIPCIÓN */}
         <Text style={styles.description}>
           Este informe presenta un resumen visual del estado actual del inventario,
           incluyendo materiales no devueltos, materiales dañados, usuarios con pendientes
           y tendencias de uso de materiales.
         </Text>
 
-        {/* GRÁFICAS */}
         {sections.map((section, index) => (
           <View key={index} style={styles.section}>
             <Text style={styles.sectionTitle}>
@@ -104,7 +100,6 @@ export default function Pdf({ sections = [] }) {
           </View>
         ))}
 
-        {/* FOOTER */}
         <Text style={styles.footer}>
           Generado automáticamente por el sistema | © 2026
         </Text>

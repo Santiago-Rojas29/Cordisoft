@@ -47,6 +47,8 @@ servidor.use("/login",routeAuth)
 import rutasEstadisticas from './routes/routerEstadisticas.js';
 servidor.use("/estadisticas",rutasEstadisticas)
 
+import { rutasReportes } from './routes/routerReportes.js';
+servidor.use("/reportes", rutasReportes)
 
 
 

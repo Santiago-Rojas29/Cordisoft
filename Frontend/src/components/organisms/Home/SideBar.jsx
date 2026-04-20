@@ -55,7 +55,6 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
         </div>
 
 
-        {/* MENU */}
 
         <div className="flex-grow-1 p-2">
 
@@ -153,7 +152,6 @@ import SidebarUser from "../../molecules/Home/sideBarUser";
         </div>
 
 
-        {/* FOOTER */}
 
         <div className="p-3 border-top">
 
