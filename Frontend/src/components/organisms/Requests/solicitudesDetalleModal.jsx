@@ -4,10 +4,12 @@ export default function SolicitudesDetalleModal({
     show,
     onClose,
     detalles = [],
+    setDetallesActivos,
     solicitudActiva,
     usuarios = [],
     materiales = [],
-    aprendices = []
+    aprendices = [],
+    usuarioLogueado
 }) {
     if (!show) return null;
 
@@ -15,13 +17,39 @@ export default function SolicitudesDetalleModal({
         try {
             await axiosClient.put(`/detalleSolicitudes/editar/${id_detalle}`, {
                 estado_item: estado
+
             });
+
+            setDetallesActivos(prev =>
+                prev.map(det =>
+                    det.id_detalle == id_detalle
+                        ? { ...det, estado_item: estado }
+                        : det
+                )
+            );
             console.log("Estado Actualizado")
         } catch (error) {
             console.error("Error al actualizar estado:", error)
         }
     }
-    const canEdit = solicitudActiva?.estado_prestamo === 'devuelto';
+
+    const esAdmin = ["admin", "administrador"].includes(
+    usuarioLogueado?.rol?.toLowerCase()
+    );
+
+
+
+    const canEdit = esAdmin && solicitudActiva?.estado_prestamo === 'devuelto';
+
+    console.log("Usuario logueado:", usuarioLogueado)
+    console.log("Es admin:", usuarioLogueado?.rol === "Administrador");
+
+    console.log("USER:", usuarioLogueado);
+    console.log("ROL:", usuarioLogueado?.rol);
+    console.log("ES ADMIN:", esAdmin);
+    console.log("CAN EDIT:", canEdit);
+
+
 
     return (
         <div className="modal show d-block bg-dark bg-opacity-50" tabIndex="-1">
@@ -42,7 +70,7 @@ export default function SolicitudesDetalleModal({
                             <div>
                                 <strong>Estado: </strong> 
                                 <span className={`badge bg-${solicitudActiva?.estado === 'Pendiente' ? 'warning text-dark' : solicitudActiva?.estado === 'Aprobada' ? 'success' : 'danger'}`}>
-                                    {solicitudActiva?.estado}
+                                    {solicitudActiva?.estado}   
                                 </span>
                             </div>
                         </div>

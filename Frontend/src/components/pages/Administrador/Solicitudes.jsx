@@ -8,6 +8,8 @@ import SearchBar from "../../../components/molecules/Users/searchBar"
 import SolicitudesTable from "../../../components/organisms/Requests/solicitudesTable"
 import SolicitudesDetalleModal from "../../../components/organisms/Requests/solicitudesDetalleModal"
 
+import { useAuth } from "../../../auth/authContext"
+
 export default function Solicitudes() {
 
     const [solicitudes, setSolicitudes] = useState([])
@@ -22,6 +24,9 @@ export default function Solicitudes() {
     const [showModal, setShowModal] = useState(false)
     const [solicitudActiva, setSolicitudActiva] = useState(null)
     const [detallesActivos, setDetallesActivos] = useState([])
+
+    const usuarioLogueado = JSON.parse(localStorage.getItem("usuario"))
+    const { user } = useAuth();
 
     const obtenerDatos = async () => {
         try {
@@ -44,7 +49,7 @@ export default function Solicitudes() {
         obtenerDatos()
     }, [])
 
-    // Simulación de búsqueda local rápida (Opcional, si no hay backend endpoint para buscar)
+
     const solicitudesFiltradas = solicitudes.filter(sol => 
         sol.id_solicitud?.toString().includes(busqueda) || 
         sol.id_usuario?.toString().includes(busqueda) || 
@@ -128,9 +133,11 @@ export default function Solicitudes() {
                 onClose={() => setShowModal(false)}
                 solicitudActiva={solicitudActiva}
                 detalles={detallesActivos}
+                setDetallesActivos={setDetallesActivos}
                 usuarios={usuarios}
                 materiales={materiales}
                 aprendices={aprendices}
+                usuarioLogueado={user}
             />
 
         </CrudLayout>

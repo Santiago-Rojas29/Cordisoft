@@ -19,6 +19,7 @@ export const DamagedMaterialsChart = () => {
       try {
         const response = await axios.get(STATS_ENDPOINTS.damagedMaterials);
         setData(response.data || []);
+        console.log(data)
       } catch (err) {
         setError('No se pudieron cargar los datos');
       } finally {
