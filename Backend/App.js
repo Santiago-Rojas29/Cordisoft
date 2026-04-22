@@ -12,43 +12,43 @@ servidor.use(cors({
 }));
 
 import rutasArea from './routes/routerArea.js';
-servidor.use('/areas',rutasArea)
+servidor.use('/api/areas',rutasArea)
 
 import rutasRoles from './routes/routerRol.js';
-servidor.use('/roles',rutasRoles)
+servidor.use('/api/roles',rutasRoles)
 
 import rutasUsuarios from './routes/routerUsuario.js';
-servidor.use('/usuarios',rutasUsuarios)
+servidor.use('/api/usuarios',rutasUsuarios)
 
 import rutasFichas from './routes/routerFicha.js';
-servidor.use('/fichas',rutasFichas)
+servidor.use('/api/fichas',rutasFichas)
 
 import rutasMateriales from './routes/routerMaterial.js';
-servidor.use('/materiales',rutasMateriales)
+servidor.use('/api/materiales',rutasMateriales)
 
 import rutasBodegas from './routes/routerBodega.js';
-servidor.use('/bodegas',rutasBodegas)
+servidor.use('/api/bodegas',rutasBodegas)
 
 import rutasAprendices from './routes/routerAprendiz.js';
-servidor.use('/aprendices',rutasAprendices)
+servidor.use('/api/aprendices',rutasAprendices)
 
 import rutasMovimientoInventario from './routes/routerMovimientoInventario.js';
-servidor.use('/movimientos',rutasMovimientoInventario)
+servidor.use('/api/movimientos',rutasMovimientoInventario)
 
 import rutasSolicitudes from './routes/routerSolicitud.js';
-servidor.use('/solicitudes',rutasSolicitudes)
+servidor.use('/api/solicitudes',rutasSolicitudes)
 
 import rutasDetalleSolicitud from './routes/routerDetalleSolicitud.js';
-servidor.use('/detalleSolicitudes',rutasDetalleSolicitud)
+servidor.use('/api/detalleSolicitudes',rutasDetalleSolicitud)
 
 import routeAuth from './routes/routerLogin.js';
-servidor.use("/login",routeAuth)
+servidor.use("/api/login",routeAuth)
 
 import rutasEstadisticas from './routes/routerEstadisticas.js';
-servidor.use("/estadisticas",rutasEstadisticas)
+servidor.use("/api/estadisticas",rutasEstadisticas)
 
 import { rutasReportes } from './routes/routerReportes.js';
-servidor.use("/reportes", rutasReportes)
+servidor.use("/api/reportes", rutasReportes)
 
 
 

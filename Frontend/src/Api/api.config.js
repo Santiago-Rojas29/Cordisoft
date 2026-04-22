@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://localhost:3000'; // 
+export const API_BASE_URL = 'http://localhost:3000/api'; // 
 
 export const STATS_ENDPOINTS = {
   unreturnedMaterials: `${API_BASE_URL}/estadisticas/materialesNoDevueltos`,
