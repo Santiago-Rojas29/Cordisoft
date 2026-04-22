@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { faUserClock } from '@fortawesome/free-solid-svg-icons';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { STATS_ENDPOINTS } from '../../../api/api.config';
+import { STATS_ENDPOINTS } from '../../../Api/api.config';
 import { StatCard } from '../../molecules/Grafics/StatCard';
 import { LoadingSpinner } from '../../atoms/Grafics/LoadingSpinner';
 import { CustomTooltip } from '../../molecules/Grafics/CustomTooltip';
@@ -55,7 +55,7 @@ export const DefaultingUsersChart = () => {
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis dataKey="name" />
             <YAxis />
-            <Tooltip content={<CustomTooltip unit="pendientes" />} cursor={{fill: 'rgba(0,0,0,0.05)'}}/>
+            <Tooltip content={<CustomTooltip unit="pendientes" />} cursor={{ fill: 'rgba(0,0,0,0.05)' }} />
             <Bar dataKey="pendientes" isAnimationActive={false} radius={[4, 4, 0, 0]}>
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

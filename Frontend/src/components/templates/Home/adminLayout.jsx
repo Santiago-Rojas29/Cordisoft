@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
-import Sidebar from "../../organisms/Home/sideBar";
+import Sidebar from "../../organisms/Home/SideBar";
 
 export default function AdminLayout() {
 

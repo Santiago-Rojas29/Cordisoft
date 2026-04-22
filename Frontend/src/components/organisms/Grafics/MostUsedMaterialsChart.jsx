@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { STATS_ENDPOINTS } from '../../../api/api.config';
+import { STATS_ENDPOINTS } from '../../../Api/api.config';
 import { StatCard } from '../../molecules/Grafics/StatCard';
 import { LoadingSpinner } from '../../atoms/Grafics/LoadingSpinner';
 import { CustomTooltip } from '../../molecules/Grafics/CustomTooltip';

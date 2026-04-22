@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { faTools } from '@fortawesome/free-solid-svg-icons';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { STATS_ENDPOINTS } from '../../../api/api.config';
+import { STATS_ENDPOINTS } from '../../../Api/api.config';
 import { StatCard } from '../../molecules/Grafics/StatCard';
 import { LoadingSpinner } from '../../atoms/Grafics/LoadingSpinner';
 import { CustomTooltip } from '../../molecules/Grafics/CustomTooltip';
@@ -39,7 +39,7 @@ export const DamagedMaterialsChart = () => {
       iconColor="#6f42c1"
       badgeValue={`Total: ${total}`}
       badgeColor="bg-primary bg-gradient"
-      style={{'--bs-bg-opacity': .8, backgroundColor: '#6f42c1'}}
+      style={{ '--bs-bg-opacity': .8, backgroundColor: '#6f42c1' }}
     >
       {isLoading && <LoadingSpinner />}
       {error && <div className="alert alert-danger m-auto">{error}</div>}

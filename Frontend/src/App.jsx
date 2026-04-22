@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import Login from "./components/pages/Login"
+import Login from "./components/pages/login"
 import Instructor from "./components/pages/Instructor/Instructor.jsx"
 import ProtectedRoute from "./routes/ProtectedRoute"
 import AdminLayout from "./components/templates/Home/adminLayout"

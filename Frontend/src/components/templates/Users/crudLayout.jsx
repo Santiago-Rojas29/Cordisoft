@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ChatButton from "../../atoms/ChatBot/ChatButton";
+import ChatButton from "../../atoms/ChatBot/chatButton";
 import ChatSidebar from "../../organisms/ChatBot/chatSidebar";
 
 export default function CrudLayout({
