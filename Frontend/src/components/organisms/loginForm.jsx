@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import axios from "axios";
+import axiosClient from "../../Api/axiosClient";
 import { useState } from "react";
 
 import { ForgotPassword } from "../molecules/forgotPassword";
@@ -19,7 +19,7 @@ export const LoginForm=({onLoginSuccess})=>{
         setSuccess("")
 
         try{
-            const respuesta= await axios.post("http://localhost:3000/api/login/validar",{correo_electronico,contraseña})
+            const respuesta= await axiosClient.post("/login/validar",{correo_electronico,contraseña})
             setSuccess("Inicio de sesion Exitoso")
             toast.success("Inicio de sesion Exitoso")
             onLoginSuccess(respuesta.data)
