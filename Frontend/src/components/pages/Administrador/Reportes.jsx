@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axiosClient from '../../Api/axiosClient';
-import { STATS_ENDPOINTS, REPORT_ENDPOINTS } from '../../Api/api.config';
+import axiosClient from '../../../Api/axiosClient';
+import { STATS_ENDPOINTS, REPORT_ENDPOINTS } from '../../../Api/api.config';
 import { ReportSelector } from '../../molecules/Reports/ReportSelector';
 import { ReportSummary } from '../../molecules/Reports/ReportSummary';
 import { ReportViewer } from '../../organisms/Reports/ReportViewer';
