@@ -43,7 +43,7 @@ export const reporteDanos = async (req, resp) => {
         JOIN material m ON ds.id_material = m.id_material
         JOIN solicitud s ON ds.id_solicitud = s.id_solicitud
         JOIN usuario u ON s.id_usuario = u.id_usuario
-        LEFT JOIN aprendices a ON ds.id_aprendiz = a.id_aprendiz
+        LEFT JOIN aprendiz a ON ds.id_aprendiz = a.id_aprendiz
         LEFT JOIN bodega b ON m.id_bodega = b.id_bodega
         WHERE ds.estado_item = 'dañado'
             AND s.fecha_creacion BETWEEN ? AND ?

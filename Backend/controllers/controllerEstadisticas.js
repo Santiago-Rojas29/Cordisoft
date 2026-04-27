@@ -106,7 +106,7 @@ export const aprendicesConDanos = async (req, resp) => {
             a.nombre as name,
             COUNT(*) as danios
         FROM detallesolicitud ds
-        JOIN aprendices a ON ds.id_aprendiz = a.id_aprendiz
+        JOIN aprendiz a ON ds.id_aprendiz = a.id_aprendiz
         WHERE ds.estado_item = 'dañado'
         GROUP BY a.id_aprendiz, a.nombre
         ORDER BY danios DESC
