@@ -1,3 +1,6 @@
+import { Buffer } from 'buffer';
+window.Buffer = window.Buffer || Buffer;
+
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import { AuthProvider } from './auth/authContext.jsx'

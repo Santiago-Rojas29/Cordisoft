@@ -1,45 +1,24 @@
 import { useRef } from 'react';
 import { StatsDashboardTemplate } from '../../templates/Grafics/StatsDashboardTemplate';
 import { UnreturnedMaterialsChart } from '../../organisms/Grafics/UnreturnedMaterialsChart';
-import { DamagedMaterialsChart } from '../../organisms/Grafics/DamagedMaterialsChart';
 import { DefaultingUsersChart } from '../../organisms/Grafics/DefaultingUsersChart';
 import { MostUsedMaterialsChart } from '../../organisms/Grafics/MostUsedMaterialsChart';
 import { StockByWarehouseChart } from '../../organisms/Grafics/StockByWarehouseChart';
-import { ApprenticeDamagesChart } from '../../organisms/Grafics/ApprenticeDamagesChart';
 import { ReturnRateChart } from '../../organisms/Grafics/ReturnRateChart';
-import { ExportDashboardPDF } from '../../organisms/PDF/ExportDashboardPDF';
 
 export default function Dashboard() {
   const unreturnedRef     = useRef();
-  const damagedRef        = useRef();
   const defaultingRef     = useRef();
   const mostUsedRef       = useRef();
   const stockWarehouseRef = useRef();
-  const apprenticeRef     = useRef();
   const returnRateRef     = useRef();
-
-  const charts = [
-    { id: 'unreturned',     name: 'Materiales No Devueltos',    ref: unreturnedRef },
-    { id: 'damaged',        name: 'Materiales Más Dañados',     ref: damagedRef },
-    { id: 'defaulting',     name: 'Usuarios Morosos',           ref: defaultingRef },
-    { id: 'mostUsed',       name: 'Préstamos por Mes',          ref: mostUsedRef },
-    { id: 'stockWarehouse', name: 'Stock por Bodega',           ref: stockWarehouseRef },
-    { id: 'apprentice',     name: 'Aprendices con Daños',       ref: apprenticeRef },
-    { id: 'returnRate',     name: 'Tasa de Devolución',         ref: returnRateRef },
-  ];
 
   return (
     <div>
       <h1 className="fw-bold mb-4">Panel de Administración</h1>
-
-      <ExportDashboardPDF charts={charts} />
-
       <StatsDashboardTemplate>
         <div className="col" ref={unreturnedRef}>
           <UnreturnedMaterialsChart />
-        </div>
-        <div className="col" ref={damagedRef}>
-          <DamagedMaterialsChart />
         </div>
         <div className="col" ref={defaultingRef}>
           <DefaultingUsersChart />
@@ -49,9 +28,6 @@ export default function Dashboard() {
         </div>
         <div className="col" ref={stockWarehouseRef}>
           <StockByWarehouseChart />
-        </div>
-        <div className="col" ref={apprenticeRef}>
-          <ApprenticeDamagesChart />
         </div>
         <div className="col" ref={returnRateRef}>
           <ReturnRateChart />

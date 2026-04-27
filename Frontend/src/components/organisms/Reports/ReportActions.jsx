@@ -1,31 +1,37 @@
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import Pdf from '../../Pdf';
 
-export const exportarTXT = (datos, titulo) => {
-  const headers = Object.keys(datos[0] ?? {}).join('\t');
-  const rows = datos.map(row => Object.values(row).map(v => String(v ?? '')).join('\t')).join('\n');
-  const blob = new Blob([`${titulo}\n\n${headers}\n${rows}`], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${titulo.replace(/ /g, '_')}.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
+export const ReportActions = ({ reportConfig, data, disabled }) => {
+  if (disabled || !data || data.length === 0) return null;
+
+  return (
+    <div className="d-flex justify-content-end mt-4">
+      <PDFDownloadLink
+        document={
+          <Pdf
+            title={reportConfig.title}
+            description={reportConfig.description}
+            conclusion={reportConfig.conclusion}
+            data={data}
+            columns={reportConfig.columns}
+          />
+        }
+        fileName={`${reportConfig.fileName}.pdf`}
+      >
+        {({ loading }) => (
+          <button className="btn btn-success px-4 fw-medium shadow-sm d-flex align-items-center gap-2" disabled={loading}>
+            <i className="bi bi-file-earmark-pdf"></i>
+            {loading ? 'Generando PDF...' : 'Descargar Reporte PDF'}
+          </button>
+        )}
+      </PDFDownloadLink>
+    </div>
+  );
 };
 
-export const ReportActions = ({ onExportar }) => (
-  <div className="d-flex justify-content-end mb-3">
-    <button
-      className="btn btn-outline-danger btn-sm d-flex align-items-center gap-2"
-      onClick={onExportar}
-    >
-      <FontAwesomeIcon icon={faFilePdf} />
-      Exportar
-    </button>
-  </div>
-);
-
 ReportActions.propTypes = {
-  onExportar: PropTypes.func.isRequired,
+  reportConfig: PropTypes.object.isRequired,
+  data:         PropTypes.array.isRequired,
+  disabled:     PropTypes.bool,
 };
