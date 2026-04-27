@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { faTools } from '@fortawesome/free-solid-svg-icons';
+import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { STATS_ENDPOINTS } from '../../../Api/api.config';
 import { StatCard } from '../../molecules/Grafics/StatCard';
 import { LoadingSpinner } from '../../atoms/Grafics/LoadingSpinner';
 import { CustomTooltip } from '../../molecules/Grafics/CustomTooltip';
 
-const COLORS = ['#6f42c1', '#8a5cd0', '#a47de0', '#bf9eef', '#d4b8f7', '#e8d8fb'];
+const COLORS = ['#dc3545', '#e4606d', '#eb8c95', '#f2b8bd', '#f8d7da', '#fde8ea'];
 
-export const DamagedMaterialsChart = () => {
+export const ApprenticeDamagesChart = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ export const DamagedMaterialsChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(STATS_ENDPOINTS.damagedMaterials);
+        const response = await axios.get(STATS_ENDPOINTS.apprenticeDamages);
         setData(response.data || []);
       } catch {
         setError('No se pudieron cargar los datos');
@@ -28,16 +28,16 @@ export const DamagedMaterialsChart = () => {
     fetchData();
   }, []);
 
-  const total = data.reduce((acc, curr) => acc + (curr.valor || 0), 0);
+  const total = data.reduce((acc, curr) => acc + (curr.danios || 0), 0);
 
   return (
     <StatCard
-      title="Materiales Más Dañados"
-      subtitle="Ranking de materiales con más daños registrados"
-      iconName={faTools}
-      iconColor="#6f42c1"
+      title="Aprendices con Daños"
+      subtitle="Top aprendices con más materiales dañados"
+      iconName={faUserSlash}
+      iconColor="#dc3545"
       badgeValue={`Total daños: ${total}`}
-      badgeColor="bg-primary bg-gradient"
+      badgeColor="bg-danger"
     >
       {isLoading && <LoadingSpinner />}
       {error && <div className="alert alert-danger m-auto">{error}</div>}
@@ -54,8 +54,8 @@ export const DamagedMaterialsChart = () => {
             <CartesianGrid strokeDasharray="3 3" horizontal={false} vertical={true} />
             <XAxis type="number" allowDecimals={false} />
             <YAxis dataKey="name" type="category" width={110} tick={{ fontSize: 12 }} />
-            <Tooltip content={<CustomTooltip unit="unidades dañadas" />} cursor={{ fill: 'rgba(0,0,0,0.05)' }} />
-            <Bar dataKey="valor" radius={[0, 4, 4, 0]} isAnimationActive={false}>
+            <Tooltip content={<CustomTooltip unit="daños" />} cursor={{ fill: 'rgba(0,0,0,0.05)' }} />
+            <Bar dataKey="danios" radius={[0, 4, 4, 0]} isAnimationActive={false}>
               {data.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}

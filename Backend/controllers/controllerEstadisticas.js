@@ -66,3 +66,65 @@ export const materialesMasPrestados = async (req, resp) => {
     const [resultado] = await conexionDb.query(sql)
     resp.status(200).json(resultado)
 }
+
+
+export const prestamosPorMes = async (req, resp) => {
+    const sql = `
+        SELECT
+            MONTH(s.fecha_creacion) as mes,
+            COUNT(*) as total
+        FROM solicitud s
+        WHERE s.tipo_solicitud = 'prestamo'
+            AND YEAR(s.fecha_creacion) = YEAR(CURDATE())
+        GROUP BY MONTH(s.fecha_creacion)
+        ORDER BY mes
+    `
+    const [resultado] = await conexionDb.query(sql)
+    resp.status(200).json(resultado)
+}
+
+
+export const stockPorBodega = async (req, resp) => {
+    const sql = `
+        SELECT
+            b.nombre as name,
+            COUNT(DISTINCT m.id_material) as materiales,
+            SUM(m.cantidad) as cantidad_total
+        FROM bodega b
+        LEFT JOIN material m ON m.id_bodega = b.id_bodega
+        GROUP BY b.id_bodega, b.nombre
+        ORDER BY cantidad_total DESC
+    `
+    const [resultado] = await conexionDb.query(sql)
+    resp.status(200).json(resultado)
+}
+
+
+export const aprendicesConDanos = async (req, resp) => {
+    const sql = `
+        SELECT
+            a.nombre as name,
+            COUNT(*) as danios
+        FROM detallesolicitud ds
+        JOIN aprendices a ON ds.id_aprendiz = a.id_aprendiz
+        WHERE ds.estado_item = 'dañado'
+        GROUP BY a.id_aprendiz, a.nombre
+        ORDER BY danios DESC
+        LIMIT 10
+    `
+    const [resultado] = await conexionDb.query(sql)
+    resp.status(200).json(resultado)
+}
+
+
+export const tasaDevolucion = async (req, resp) => {
+    const sql = `
+        SELECT
+            SUM(CASE WHEN estado_prestamo = 'devuelto' THEN 1 ELSE 0 END) as devueltos,
+            SUM(CASE WHEN estado_prestamo = 'activo' THEN 1 ELSE 0 END) as activos,
+            COUNT(*) as total
+        FROM prestamo
+    `
+    const [resultado] = await conexionDb.query(sql)
+    resp.status(200).json(resultado[0])
+}
