@@ -64,7 +64,7 @@ export const reporteInventario = async (req, resp) => {
             COALESCE(a.nombre, 'Sin área') AS area
         FROM material m
         LEFT JOIN bodega b ON m.id_bodega = b.id_bodega
-        LEFT JOIN area a ON m.id_area = a.id_area
+        LEFT JOIN areas a ON m.id_area = a.id_area
         ORDER BY b.nombre, m.nombre
     `
     const [resultado] = await conexionDb.query(sql)
