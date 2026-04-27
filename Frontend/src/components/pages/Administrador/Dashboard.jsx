@@ -4,7 +4,6 @@ import { DamagedMaterialsChart } from '../../organisms/Grafics/DamagedMaterialsC
 import { DefaultingUsersChart } from '../../organisms/Grafics/DefaultingUsersChart';
 import { MostUsedMaterialsChart } from '../../organisms/Grafics/MostUsedMaterialsChart';
 import { useRef } from 'react';
-import { ExportDashboardPDF } from '../../organisms/PDF/ExportDashboardPDF';
 
 export default function Dashboard() {
 
@@ -25,8 +24,6 @@ export default function Dashboard() {
       <h1 className="fw-bold mb-4">
         Panel de Administración
       </h1>
-
-      <ExportDashboardPDF charts={charts} />
 
       <div>
         <StatsDashboardTemplate>
