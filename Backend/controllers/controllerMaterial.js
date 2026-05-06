@@ -29,8 +29,8 @@ export const eliminarMaterial = async (req, resp) => {
 }
 
 export const buscarMaterial = async (req, resp) => {
-    const { id } = req.params
-    const sql = "select * from material where id_material=?"
-    const [resultado] = await conexionDb.query(sql, [id])
+    const { valor } = req.params
+    const sql = "select * from material where id_material=? or nombre like ? or descripcion like ?"
+    const [resultado] = await conexionDb.query(sql, [valor, `%${valor}%`, `%${valor}%`])
     resp.status(200).json(resultado)
 }

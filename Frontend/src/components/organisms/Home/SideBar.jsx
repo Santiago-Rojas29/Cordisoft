@@ -1,0 +1,168 @@
+import { useLocation } from "react-router-dom";
+import { useAuth } from "../../../auth/authContext";
+
+import SidebarBrand from "../../atoms/Home/sideBarBrand";
+import LogoutButton from "../../atoms/Home/logoutButton";
+import HamburgerButton from "../../atoms/Home/hamburguerButton";
+
+import SidebarItem from "../../molecules/Home/sideBarItem";
+import SidebarUser from "../../molecules/Home/sideBarUser";
+
+    import {
+    faUsers,
+    faChartLine,
+    faBell,
+    faBoxOpen,
+    faClipboardList,
+    faCheckCircle,
+    faRobot,
+    faHome,
+    faShop
+    } from "@fortawesome/free-solid-svg-icons";
+
+    export default function Sidebar({ collapsed, toggleSidebar }) {
+
+    const location = useLocation();
+    const { logout, user } = useAuth();
+
+    const isActive = (path) => location.pathname === path;
+
+    return (
+
+        <div
+        className="d-flex flex-column vh-100 border-end sidebar-container"
+        style={{
+            width: collapsed ? "70px" : "250px",
+            transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+        }}
+        >
+
+
+        <div className="p-3 border-bottom">
+
+            <div className="d-flex align-items-center justify-content-between">
+
+            {!collapsed && <SidebarBrand />}
+
+            <HamburgerButton onClick={toggleSidebar} />
+
+            </div>
+
+            {!collapsed && (
+            <SidebarUser role={user?.rol || "Administrador"} />
+            )}
+
+        </div>
+
+
+
+        <div className="flex-grow-1 p-2">
+
+            <SidebarItem
+            to="/administrador/dashboard"
+            icon={faHome}
+            label="Dashboard"
+            active={isActive("/administrador/dashboard")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/bodegas"
+            icon={faShop}
+            label="Bodegas"
+            active={isActive("/administrador/bodegas")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/materiales"
+            icon={faBoxOpen}
+            label="Materiales"
+            active={isActive("/administrador/materiales")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/areas"
+            icon={faChartLine}
+            label="Áreas"
+            active={isActive("/administrador/areas")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/fichas"
+            icon={faClipboardList}
+            label="Fichas"
+            active={isActive("/administrador/fichas")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/usuarios"
+            icon={faUsers}
+            label="Usuarios"
+            active={isActive("/administrador/usuarios")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/reportes"
+            icon={faChartLine}
+            label="Reportes"
+            active={isActive("/administrador/reportes")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/notificaciones"
+            icon={faBell}
+            label="Notificaciones"
+            active={isActive("/administrador/notificaciones")}
+            collapsed={collapsed}
+            />
+
+
+            <SidebarItem
+            to="/administrador/solicitudes"
+            icon={faClipboardList}
+            label="Solicitudes"
+            active={isActive("/administrador/solicitudes")}
+            collapsed={collapsed}
+            />
+
+
+
+            <SidebarItem
+            to="/administrador/verificacionMateriales"
+            icon={faCheckCircle}
+            label="Verificación"
+            active={isActive("/administrador/verificacionMateriales")}
+            collapsed={collapsed}
+            />
+
+            <SidebarItem
+            to="/administrador/chatBot"
+            icon={faRobot}
+            label="Chat Bot IA"
+            active={isActive("/administrador/chatBot")}
+            collapsed={collapsed}
+            />
+
+        </div>
+
+
+
+        <div className="p-3 border-top">
+
+            {!collapsed && (
+            <LogoutButton onClick={logout} />
+            )}
+
+        </div>
+
+        </div>
+
+    );
+
+    }

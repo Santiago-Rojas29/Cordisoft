@@ -28,6 +28,7 @@ export function AuthProvider({children}){
 
         setToken(jwt)
         setUser(userData)
+        console.log(userData)
 
     }
 

@@ -31,7 +31,7 @@ export const createAuth=async(req,resp)=>{
 
     resp.status(200).json({token,
         user:{
-            id:usuario.id_ususario,
+            id:usuario.id_usuario,
             nombre:usuario.nombre,
             rol:usuario.rol
             

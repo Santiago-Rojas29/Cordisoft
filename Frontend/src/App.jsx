@@ -1,19 +1,27 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import Login from "./pages/Login"
-import Instructor from "./pages/Instructor.jsx"
+import Login from "./components/pages/login"
+import Instructor from "./components/pages/Instructor/Instructor.jsx"
 import ProtectedRoute from "./routes/ProtectedRoute"
-import AdminLayout from "./layouts/AdminLayout.jsx"
+import AdminLayout from "./components/templates/Home/adminLayout"
+import InstructorLayout from "./components/templates/Home/InstuctorLayout"
+import Solicitar from "./components/pages/Instructor/Solicitar.jsx"
+import HistorialSolicitudes from "./components/pages/Instructor/HistorialSolicitudes.jsx"
 
-import Dashboard from "./pages/Administrador/Dashboard.jsx"
-import Areas from "./pages/Administrador/Areas.jsx"
-import Fichas from "./pages/Administrador/Fichas.jsx"
-import Materiales from "./pages/Administrador/Materiales.jsx"
-import Notificaciones  from "./pages/Administrador/Notificaciones.jsx"
-import Reportes from "./pages/Administrador/Reportes.jsx"
-import Usuarios from "./pages/Administrador/Usuarios.jsx"
-import Solicitudes from "./pages/Administrador/Solicitudes.jsx"
-import VerificacionMateriales from "./pages/Administrador/VerificacionMateriales.jsx"
-import ActualizarStock from "./pages/Administrador/ActualizarStock.jsx"
+import Dashboard from "./components/pages/Administrador/Dashboard.jsx"
+import Bodegas from "./components/pages/Administrador/Bodegas.jsx"
+import Areas from "./components/pages/Administrador/Areas.jsx"
+import Fichas from "./components/pages/Administrador/Fichas.jsx"
+import Materiales from "./components/pages/Administrador/Materiales.jsx"
+import Notificaciones  from "./components/pages/Administrador/Notificaciones.jsx"
+import Reportes from "./components/pages/Administrador/Reportes.jsx"
+import Usuarios from "./components/pages/Administrador/Usuarios.jsx"
+import Solicitudes from "./components/pages/Administrador/Solicitudes.jsx"
+
+import VerificacionMateriales from "./components/pages/Administrador/VerificacionMateriales.jsx"
+import ActualizarStock from "./components/pages/Administrador/ActualizarStock.jsx"
+import ChatBot from "./components/pages/Administrador/ChatBot.jsx"
+
+
 
 function App() {
   return (
@@ -31,26 +39,37 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route path="dashboard" index element={<Dashboard />} />
+          <Route path="bodegas" element={<Bodegas />} />
           <Route path="areas" element={<Areas />} />
           <Route path="fichas" element={<Fichas />} />
           <Route path="materiales" element={<Materiales />} />
           <Route path="usuarios" element={<Usuarios />} />
           <Route path="reportes" element={<Reportes />} />
           <Route path="solicitudes" element={<Solicitudes />} />
+
           <Route path="notificaciones" element={<Notificaciones />} />
           <Route path="actualizarStock" element={<ActualizarStock />} />
           <Route path="verificacionMateriales" element={<VerificacionMateriales/>} />
+          <Route path="chatBot" element={<ChatBot/>} />
         </Route>
 
         <Route
           path="/instructor"
           element={
             <ProtectedRoute>
-              <Instructor />
+              <InstructorLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<Instructor />} />
+          <Route path="dashboard" index element={<Dashboard />} />
+          <Route path="usuario" element={<Instructor />} />
+          <Route path="notificaciones" element={<Instructor />} />
+          <Route path="solicitar" element={<Solicitar />} />
+          <Route path="historial-solicitudes" element={<HistorialSolicitudes />} />
+
+        </Route>
 
       </Routes>
     </BrowserRouter>
