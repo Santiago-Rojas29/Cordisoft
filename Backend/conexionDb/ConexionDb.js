@@ -1,9 +1,9 @@
 import { createPool } from "mysql2/promise";
 
 export const conexionDb=createPool({
-    host:"localhost",
-    user:"root",
-    password:"",
-    port:3306,
-    database:"cordisoft"
+    host: process.env.DB_HOST || "localhost",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD || "",
+    port: 3306,
+    database: process.env.DB_NAME
 })

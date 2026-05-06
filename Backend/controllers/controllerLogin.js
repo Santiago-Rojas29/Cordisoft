@@ -1,10 +1,10 @@
-import {conexionDb} from "../conexionDb/conexionDb.js"
+import {conexionDb} from "../conexionDb/ConexionDb.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 
 export const createAuth=async(req,resp)=>{
-    const{correo_electronico,contraseña}=req.body
-    const sql="select usuario.id_usuario,usuario.nombre,usuario.contraseña,rol.nombre as rol from usuario join rol on usuario.id_rol = rol.id_rol where usuario.correo_electronico=? "
+    const{correo_electronico,contrasena}=req.body
+    const sql="select usuario.id_usuario,usuario.nombre,usuario.contrasena,rol.nombre as rol from usuario join rol on usuario.id_rol = rol.id_rol where usuario.correo_electronico=? "
     const [respuesta]= await conexionDb.query(sql,[correo_electronico])
 
     const usuario=respuesta[0];
@@ -13,7 +13,7 @@ export const createAuth=async(req,resp)=>{
         return resp.status(401).json({msg:"Usuario no valido"})
 }
 
-    const validar= await bcrypt.compare(contraseña,usuario.contraseña)
+    const validar= await bcrypt.compare(contrasena,usuario.contrasena)
     if(!validar){
         return resp.status(401).json({msg:"La contraseña es incorrecta"})
     }

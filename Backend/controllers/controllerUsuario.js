@@ -1,11 +1,11 @@
-import { conexionDb } from "../conexionDb/conexionDb.js";
+import { conexionDb } from "../conexionDb/ConexionDb.js";
 import bcrypt from "bcryptjs"
 
 export const crearUsuario = async (req, resp) => {
     const { correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contraseña } = req.body
-    const contraseñaEncrypt=await bcrypt.hash(contraseña,8)
-    const sql = "insert into usuario (correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contraseña) values(?,?,?,?,?,?,?)"
-    const [resultado] = await conexionDb.query(sql, [correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contraseñaEncrypt])
+    const contrasenaEncrypt=await bcrypt.hash(contraseña,8)
+    const sql = "insert into usuario (correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contrasena) values(?,?,?,?,?,?,?)"
+    const [resultado] = await conexionDb.query(sql, [correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contrasenaEncrypt])
     resp.status(200).json(resultado)
 }
 
@@ -18,8 +18,8 @@ export const listarUsuario = async (req, resp) => {
 export const editarUsuario = async (req, resp) => {
     const { id } = req.params
     const { correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contraseña } = req.body
-    const sql = "update usuario set correo_electronico=?, identificacion=?, nombre=?, apellidos=?, estado=?, id_rol=?, contraseña=? where id_usuario=?"
-    const [resultado] = await conexionDb.query(sql, [correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contraseña, id])
+    const sql = "update usuario set correo_electronico=?, identificacion=?, nombre=?, apellidos=?, estado=?, id_rol=?, contrasena=? where id_usuario=?"
+    const [resultado] = await conexionDb.query(sql, [correo_electronico, identificacion, nombre, apellidos, estado, id_rol, contrasena, id])
     resp.status(200).json(resultado)
 }
 
